@@ -28,7 +28,7 @@
 
 ## 2. Component 현황
 
-### Component Checklist (사용자 확정 15개 항목, 2026-09-03 — 기존 Tier 1/2/3 체계 전면 교체, **14/15 완료**, 2026-09-05 Message Box 신규 제작 완료 반영)
+### Component Checklist (사용자 확정 15개 항목, 2026-09-03 — 기존 Tier 1/2/3 체계 전면 교체, **14/15 완료**, 2026-09-05 Message Box 신규 제작 완료 반영. **16번째 Text Input, 17번째 Text Area는 원래 15개 체크리스트 밖의 추가 항목** — Text Input은 외부 비교 감사에서 지목된 공백, Text Area는 상품 리뷰 작성 화면 대응을 위해 각각 2026-09-06 별도로 추가)
 
 완료 기준(사용자 확정): 컴포넌트가 만들어져 있으면 완료(실사용 인스턴스 개수 무관). 근거: `diagnosis/component-checklist.md`(2026-09-03 갱신).
 
@@ -47,6 +47,8 @@
 - ❌ Radio/Checkbox — 진짜 토글 가능한 인터랙티브 컴포넌트 기준 0/2 유지. `Icon / Radio`(`6573:3439`, 실사용 0곳)와 **`Icon / Checkbox`(`6020:13544`, 2026-09-05 재확인 — "Checkbox 아예 없음"이라던 이전 서술은 오류, `Item Card / Cart` 내장+장바구니 4곳+`Cart / Selection Toolbar`에서 실사용 중)** 둘 다 존재하지만, 둘 다 Default/Disabled(또는 Selected) 상태만 있고 실제 선택 해제(빈 박스/빈 원)를 표현하는 variant가 없는 장식용 글리프라 항목 전체는 미완료 유지
 - ✅ Bottom Sheet — `Bottom Sheet / Informational`(구 Sheet/Confirmation) + `Bottom Sheet / Interactive`(구 Sheet/Selector), 2026-09-05 개명. `Show Scroll`(Boolean)은 Informational에만 있음 — Interactive는 한 차례 추가했다가 완전히 되돌려 원래 구조(header/body/button)로 복원
 - ✅ Tab
+- ✅ Text Input(16번째, 원래 체크리스트 밖) — `Text Input`(`6800:8767`, `① Components` 페이지). 사용자가 다른 Figma 파일에서 복사해온 컴포넌트를 이 시스템 컨벤션으로 재작업 완료(Property 축 이름 교환, 색상 195곳·텍스트 86곳 로컬 토큰 재바인딩, radius 68곳 바인딩, guide text 아이콘 정식 인스턴스화, 신규 `Icon / Status / Success`·`Guide Row` 컴포넌트 생성, 트레일링 버튼을 로컬 `Button`으로 재연결, `Masking`→`Input Type`(Default/Masking/Number) 재구성, guide text 줄별 독립 톤 지원) — `design-system/design.md` §2.16, `diagnosis/text-input-integration-2026-09-06.md`
+- ✅ Text Area(17번째, 원래 체크리스트 밖) — `Text Area`(`6998:6`, `① Components` 페이지). 상품 리뷰 작성처럼 긴 텍스트 입력에 대응하는 신규 컴포넌트, 사용자 제공 참고 화면(`6801:4770`)을 실측해 제작. `Content`(Empty/Filled)×`Status`(Default/Active/Disabled/Invalid) + `Show Counter`(Boolean), `Guide Row` 재사용 — `design-system/design.md` §2.17, `diagnosis/text-area-component-2026-09-06.md`
 
 ### 컴포넌트 상세 현황(체크리스트 항목의 세부 근거)
 - Price Block, Spec Row, Rating Display — Item Card에서 독립 컴포넌트로 분리 완료(`diagnosis/item-card-family-history.md`), 단 **상품 상세페이지에서는 아직 raw로 재구현되어 인스턴스 미적용**(`diagnosis/project-audit-history.md`). **Price Block은 2026-09-04에 `Show Unit Price`(Boolean) 신규 추가** — 그람/밀리리터 단위 환산 불가능한 상품은 단위가 줄을 끌 수 있음(`design-system/design.md` §2.8, `design-system/decisions.md`)
@@ -93,6 +95,9 @@
 **P3**
 - Divider 레이어 이름을 두께별로 구분(`divider-thin`/`divider-section`) — **미착수**
 - Grid Foundation 문서에 "캐러셀 영역 3열" 규칙 보완 — **미착수**
+- Text Input의 itemSpacing/padding을 Spacing Variable에 바인딩 — **미착수**(값 자체는 기존 토큰과 일치, 바인딩만 미실행)
+- ~~Text Input `Masking=MaskedWithLabel`의 우측 라벨 태그 최종 비주얼 확정~~ — 해결(2026-09-06). `Masking`을 `Input Type`(Default/Masking/Number)으로 재구성하며 `MaskedWithLabel` 자체를 삭제 — 대상이 없어져 항목 소멸
+- Text Input `Status` VARIANT 속성 `defaultValue`가 `Active`로 남아있음(Assets 패널 미리보기 조합만 영향, 경미) — **미착수**, Figma API가 VARIANT `defaultValue` 직접 변경을 막아 자식 순서 재배치 필요
 
 **신규 텍스트 스타일 생성 대기 (2026-09-03, `diagnosis/typography-foundation-history.md` 기준)**
 Pretendard 폰트를 이 실행 환경에서 로드할 수 없어 사용자가 Figma 앱에서 직접 생성해야 하는 11개 Text Style — `heading/xsmall`, `heading/xsmall-medium`, `heading/xxsmall`, `body/compact`, `body/compact-medium`, `label/small`, `label/xsmall-medium`, `navigation/small-bold`, `navigation/small`, `navigation/medium`, `underline/xsmall`. 정확한 스펙과 재바인딩 대상 노드는 `diagnosis/typography-foundation-history.md`(2026-09-03 섹션) 참고.
@@ -102,6 +107,7 @@ Pretendard 폰트를 이 실행 환경에서 로드할 수 없어 사용자가 F
 - 전체 시각 스타일 관찰 → `design-system/design-language.md`(2026-09-04 v0.2로 전면 갱신 완료 — design.md 리뷰로 확정된 사실들과의 불일치 7건 해소. 전담 에이전트 `design-language-curator`(`.claude/agents/design-language-curator.md`) 신설, 앞으로 이 문서 갱신은 해당 에이전트가 담당)
 - 짧은 의사결정·버그수정 로그 → `design-system/decisions.md`
 - 각 작업의 상세 경위 → `diagnosis/` 폴더(세션별 원본 기록)
+- 외부 디자인 시스템(Airbnb) 비교 분석 → `diagnosis/external-comparison-airbnb-2026-09-06.md`(design.md 문서화 공백 진단, Figma·design.md 변경 없음)
 
 ## 변경 이력
 
@@ -144,3 +150,11 @@ Pretendard 폰트를 이 실행 환경에서 로드할 수 없어 사용자가 F
 | 2026-09-05 | design.md §1~§5 전체에서 과거 이력 서술("✅ 정정", "해결된 이슈" 등) 제거, decisions.md를 유일한 이력 저장소로 일원화(Figma 변경 없음) — Type A(과거 서술, 약 48건 삭제·decisions.md 표본 대조로 손실 없음 확인)/Type B(현재 캐비어트, 약 30건 유지)/Ambiguous(약 26건 절 단위 분리)로 분류. ✅/❌ 상태 열·Do/Don't 불릿·변경이력 표는 원래 성격이 달라 전부 그대로 유지(diff 완전 동일 확인). §5의 이미 해결된 취소선 항목 3개도 목록에서 완전히 삭제. design.md v0.28 |
 | 2026-09-05 | design.md에 `## 0. 이 문서 사용 원칙` 신규 추가(Figma 변경 없음) — 새 화면 제작 시 지킬 프로세스 규칙 5개(컴포넌트 우선/토큰 전용/컴포지션 우선/모호함 표면화/사후 검증) 명문화. design.md v0.29 |
 | 2026-09-05 | 남은 별표 항목 전부 배치 실행 — `Message Box` 컴포넌트 신규 제작(Figma, `Status`=Error/Warning), 신규 Semantic 색상 토큰 4개(기존 Primitive alias), Category 화면 `Status Bar` 32→44px 통일(Figma), Overlay/Success 색상 사용 규칙 확정, Grid 정합성·Label/Chip/Badge 비교표·Variant/Boolean 기준·텍스트 넘침 원칙·`## 6. Screen Composition Patterns` 문서 반영. Component Checklist 13/15→14/15. design.md v0.30 |
+| 2026-09-05 | `design-system/validation/` 폴더 신설(Figma 변경 없음) — design.md가 실제 새 화면 제작에 충분한지 검증한 두 실험(신규 "장바구니" 화면: 커머스 도메인 내부 검증, "영화 상세" 화면: 도메인 일반화 검증)의 자체 평가 리포트를 파일로 아카이빙. design.md 헤더 "관련 문서"에 링크 추가 |
+| 2026-09-05 | "영화 상세" 검증 화면 피드백 4건 반영 — App Bar 타이틀 복원/한줄 소개 위치 이동/cast-item 간격 축소(Figma 실행), Thumbnail 미사용 사유 확인. 일반화 가능한 3건을 design.md에 반영(§0 원칙 6번, §2.14 Don't, §1.3 캐비어트). design.md v0.31 |
+| 2026-09-05 | "장바구니" 검증 화면 피드백 3건 반영 — 카드 좌우 16px 여백 복구, item-divider 간격을 16px 리듬으로 수정, `Item Card / Recommendation` 추천 상품 캐러셀 신규 추가(Figma 실행). divider 폭 규칙(풀블리드 vs 인셋)만 §6에 반영. design.md v0.32 |
+| 2026-09-05 | 비커머스 2차 검증 "개인 활동 대시보드" 진행(Figma 실행, 새 컴포넌트 0개) — 지표 카드/바 차트/상태별 활동 리스트/Empty 상태 제작. §1.6에 카드형 컨테이너 원칙, §5에 Chart·Stat 카드·비인터랙티브 상태 컴포넌트 백로그 3건 추가. 종합 판단: Foundation·화면구성은 일반화되나 §2 Component 대다수는 커머스 종속 — design.md는 A(커머스 설명 수준)에 더 가까움. design.md v0.33 |
+| 2026-09-06 | 외부 디자인 시스템(Airbnb) 비교 감사(`diagnosis/external-comparison-airbnb-2026-09-06.md`) 진행 — Text Input/Form Field 컴포넌트 완전 공백을 최우선 보완 항목으로 지목. 이어서 사용자가 다른 Figma 파일에서 복사해온 Text Input 컴포넌트(`6800:8767`)를 이 시스템 컨벤션에 맞춰 재작업(Figma 실행): Property 축 이름 교환(`Status`↔`Type`/`State`, `Show {명사}` Boolean 통일), 색상 195곳·텍스트 86곳 로컬 Foundation 토큰 재바인딩(외부 참조 0건 확인), radius 68곳 바인딩, guide text 아이콘 11곳 정식 인스턴스화(신규 `Icon / Status / Success` 컴포넌트 생성), `① Components` 페이지로 정리. Component Checklist에 16번째(체크리스트 밖 추가) 항목으로 등록. design.md v0.34 |
+| 2026-09-06 | Text Input 후속 수정 다수(Figma 실행, design.md v0.35~v0.43): `Show Required Mark`/`Show Counter`/`Show Button`을 진짜 BOOLEAN으로 재구성(변형 26→11개 병합, 유령 중복 오류 발견·제거) · 트레일링 버튼을 원본 파일의 REMOTE 컴포넌트에서 로컬 `Button`으로 재연결 · `Type`을 `Content`로 개명(Status와 개념 겹침 해소) · `Content=Done` 삭제(트레일링 버튼 활성 여부를 몰래 실어 나르던 값) · 누락된 `Content=Empty+Status=Active`/버튼 없는 `Status=Default` 기본 조합 복원(유령 중복 3번째 재발 함께 정리) · `Helper Text=TwoLine`의 성공/에러 톤을 줄별 독립 속성(`Guide Icon 1/2`)으로, 이어서 아이콘+텍스트 색 결합 문제까지 해결한 신규 `Guide Row` 컴포넌트로 재구성. 유령 중복 버그가 스크립트·수동 편집 모두에서 반복 발생함을 확인해 후속 경고로 기록 |
+| 2026-09-06 | §1.1 Color — `Warning` Primitive 11단계 전면 재조정(노랑-골드→주황 계열, Foundation 문서 hex 라벨 11개 동반 갱신), `Feedback/Error Text`(Error/600→500)·`Feedback/Warning Text`(Warning/600→700) alias 재조정(둘 다 Message Box 전용). design.md v0.44~v0.45 |
+| 2026-09-06 | Component Checklist에 17번째(체크리스트 밖 추가) 항목 `Text Area` 신규 등록 — 상품 리뷰 작성처럼 긴 텍스트 입력에 대응, 사용자 제공 참고 화면(`6801:4770`) 실측 기반 제작(Figma 실행). `Content`×`Status` + `Show Counter`, `Guide Row` 재사용. design.md v0.46 |

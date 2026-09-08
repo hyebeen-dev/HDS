@@ -272,8 +272,44 @@ Variable(`Color/Primitive/Success/50~1000`) 자체의 실제 값을 직접 조�
 
 또한 Foundation 페이지에 이미 존재하던 문서화 프레임(`Role` → `Badge`, `6373:32752`)이 이 4색을 **`Success`/`Error`/`Warning`/`Info`로 완전히 잘못 라벨링**하고 있던 것을 발견 — 실제 배송 유형과 무관한 이름이었다. `Seller`/`Fresh`/`Global`/`Tomorrow`로 정정하고 스와치를 신규 변수에 바인딩.
 
+## 2026-09-06 — Warning Primitive 11단계 전면 재조정 (노랑-골드 → 주황 계열)
+
+사용자가 Foundation 페이지에 새 참고 팔레트(11단계 원본 스와치, `6954:11306`)를 직접 그려두고 `Warning` 계열 색상 교체를 요청했다.
+
+**변경 전/후**:
+
+| 단계 | 이전 | 이후 |
+|---|---|---|
+| 50 | `#fcf6e8` | `#fff3e0` |
+| 100 | `#faecd1` | `#ffe7c2` |
+| 200 | `#f5daa3` | `#ffd799` |
+| 300 | `#f0c775` | `#ffc770` |
+| 400 | `#ebb447` | `#ffb33d` |
+| 500 | `#e5a21a` | `#ff9f0a` |
+| 600 | `#b88114` | `#d68200` |
+| 700 | `#8a610f` | `#a35d00` |
+| 800 | `#5c410a` | `#703f00` |
+| 900 | `#2e2005` | `#3d2200` |
+| 1000 | `#171003` | `#0a0600` |
+
+`Color/Primitive/Warning/*` 11개 변수의 값만 `setValueForMode`로 교체(변수 자체·별칭 구조는 그대로) — `Feedback/Warning`(→400)/`Feedback/Warning Background`(→50)/`Feedback/Warning Text`(→600) 세 Semantic 토큰은 이미 이 Primitive를 alias하고 있어 재바인딩 없이 자동으로 새 값을 반영했다. `Message Box`(Status=Warning) 스크린샷으로 카스케이드 확인.
+
+Foundation 문서화 페이지(`Color · Primitive` → `Warning` 섹션)의 스와치는 변수 바인딩이라 자동 갱신됐으나, 그 옆의 **hex 텍스트 라벨 11개는 예상대로 이전 값에 멈춰 있었다** — 이 프로젝트에서 이미 여러 번 겪은 "Variable은 정상, hex 텍스트 라벨만 별개로 갱신 필요" 패턴(2026-09-01 Success 라벨 버그와 동일 유형)이 재발한 것. 11개 라벨 전부 새 hex로 수동 교체. `Color · Semantic` 페이지는 hex 텍스트 라벨 자체가 없어 해당 없음. 사용자가 그려둔 참고 스와치 그룹은 반영 완료 후 삭제.
+
+`design-system/design.md` §1.1의 `Feedback/Warning`/`Feedback/Warning Background`/`Feedback/Warning Text` hex 값도 함께 갱신.
+
+## 2026-09-06 — Message Box 전용 Error Text/Warning Text alias 재조정
+
+사용자 요청으로 두 Semantic 토큰의 alias 대상만 교체(Primitive 값 자체는 안 건드림):
+- `Feedback/Error Text`: Error/600(`#9c1616`) → Error/500(`#c91d1d`)
+- `Feedback/Warning Text`: Warning/600(`#d68200`) → Warning/700(`#a35d00`)
+
+두 토큰 모두 `design.md §1.1`에 이미 "`Message Box` 전용 배경·텍스트 페어"로 문서화돼 있어 다른 컴포넌트에 영향이 없음을 확인한 뒤 진행. `Message Box` Status=Error/Warning 스크린샷으로 최종 확인.
+
 ## 변경 이력(추가)
 
 | 일자 | 내용 |
 |---|---|
 | 2026-09-04 | Commercial 미사용 변수 3개 삭제, 로켓 배송 배지 4색 `Rocket` Primitive 패밀리로 정식 등록(8개 변수) + 컴포넌트·문서 바인딩 정정 |
+| 2026-09-06 | `Warning` Primitive 11단계 전면 재조정(노랑-골드→주황 계열), Foundation 문서 hex 라벨 11개 동반 갱신 |
+| 2026-09-06 | `Feedback/Error Text` Error/600→500, `Feedback/Warning Text` Warning/600→700 alias 재조정(Message Box 전용) |

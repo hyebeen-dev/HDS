@@ -3,19 +3,20 @@
 > **문서 상태**: v0.1 **초안 — 검토 대기**. 사용자 검토 후 수정 예정이며, 검토 결과가 반영되기 전까지는 확정본이 아니다.
 > **문서 성격**: PRD(`prd-v0.1.md`) §11 "Design System Requirements (v0.2에서 채울 영역)"에 해당하는 내용을 실제 Figma 확정값으로 채운 **Foundation + Component 공식 명세서**다. 개발자·AI Agent가 별도 질문 없이 바로 구현에 쓸 수 있는 확정값만 싣는다.
 > **근거**: 이 문서의 모든 값은 Figma 파일(HDS_2609, fileKey `y8OcE4JLKi7ADIPCVFJQej`)에서 2026-09-04 직접 재조회한 실측값이거나, `design-system/decisions.md`에 이미 기록된 결정이다. 임의로 새 값이나 새 원칙을 만들지 않았다.
-> **관련 문서**: 현재 진행 현황 → `design-system/status.md` / 시각 스타일 관찰 → `design-system/design-language.md` / 의사결정 로그 → `design-system/decisions.md` / 전체 감사 기록 → `diagnosis/design-system-audit-2026-09-04.md`
+> **관련 문서**: 현재 진행 현황 → `design-system/status.md` / 시각 스타일 관찰 → `design-system/design-language.md` / 의사결정 로그 → `design-system/decisions.md` / 전체 감사 기록 → `diagnosis/design-system-audit-2026-09-04.md` / UI 검증 결과 → `design-system/validation/` / 외부 문서 비교 분석 → `diagnosis/external-comparison-airbnb-2026-09-06.md`
 
 ---
 
 ## 0. 이 문서 사용 원칙
 
-이 문서의 목적은 참고 기록이 아니라 **새 화면을 만들 때 실제로 지키는 규칙**이다. §1~§6의 내용을 어떻게 적용할지 판단이 필요할 때, 아래 5개 원칙을 순서대로 확인한다.
+이 문서의 목적은 참고 기록이 아니라 **새 화면을 만들 때 실제로 지키는 규칙**이다. §1~§6의 내용을 어떻게 적용할지 판단이 필요할 때, 아래 6개 원칙을 순서대로 확인한다.
 
 1. **컴포넌트 우선** — 새 화면 요소가 필요하면 먼저 §2에 이미 정의된 컴포넌트로 해결되는지 확인한다. 없는 게 확실할 때만 새로 만든다.
 2. **토큰 전용** — 색상·spacing·radius 등은 §1 Foundation에 정의된 토큰만 사용한다. raw 값(hex, px)을 직접 쓰지 않는다. 필요한 값에 맞는 토큰이 없으면 임의로 새 값을 만들지 않고 먼저 확인을 구한다.
 3. **컴포지션 우선** — 새 화면은 기존에 확인된 실제 화면 패턴 중 목적이 가장 가까운 것을 뼈대로 삼는다. 그 화면의 목적상 다르게 가야 하는 부분만 벗어나고, 왜 벗어났는지 남긴다.
 4. **모호함 표면화** — 이 문서에 없는 상황(정의되지 않은 컴포넌트 조합, 새로운 콘텐츠 종류 등)을 만나면 임의로 결정하지 않고 먼저 확인을 구한다.
 5. **사후 검증** — 화면을 다 만든 뒤, 실제로 사용한 컴포넌트의 Variants/Content 규칙과 적용한 컴포지션 패턴에 맞는지 다시 대조한다.
+6. **컴포넌트 목적 우선** — 특정 참고 화면 하나가 어떤 컴포넌트를 예외적으로 쓰고 있어도(예: 타이틀을 안 보이게 숨긴 화면), 그 예외를 새 화면에 그대로 옮기지 않는다. 컴포넌트 자체의 Content·사용가이드 규칙을 먼저 따르고, 특정 화면의 관찰은 그다음 참고용으로만 쓴다.
 
 ---
 
@@ -55,12 +56,12 @@
 | `State/Disabled` | `#cdd0d5` | Gray/300 |
 | `Feedback/Success` | `#1dc948` | Success/500 |
 | `Feedback/Error` | `#e23636` | Error/400 |
-| `Feedback/Warning` | `#ebb447` | Warning/400 |
+| `Feedback/Warning` | `#ffb33d` | Warning/400 |
 | `Feedback/Info` | `#969ca6` | Gray/500 |
 | `Feedback/Error Background` | `#fce9e9` | Error/50 |
-| `Feedback/Error Text` | `#9c1616` | Error/600 |
-| `Feedback/Warning Background` | `#fcf6e8` | Warning/50 |
-| `Feedback/Warning Text` | `#b88114` | Warning/600 |
+| `Feedback/Error Text` | `#c91d1d` | Error/500 |
+| `Feedback/Warning Background` | `#fff3e0` | Warning/50 |
+| `Feedback/Warning Text` | `#a35d00` | Warning/700 |
 | `Emphasis/Primary` | `#f2460d` | Point/500 |
 | `Emphasis/Secondary` | `#34373d` | Gray/900 |
 | `Emphasis/Ambient` | `#7b818e` | Gray/600 |
@@ -138,6 +139,8 @@ Pretendard 단일 패밀리입니다. 6개 역할 카테고리로 나뉘며, 하
 
 **반복되는 관계**: 화면 좌우 마진 **16px** / 카드 내부 요소 gap **8px**이 가장 지배적입니다. 섹션 간 구분은 8px 두꺼운 divider + 16px 여백 조합입니다. 컴포넌트 라이브러리 전체의 padding·gap은 실제 Variable에 바인딩돼 있어 리터럴 숫자로 하드코딩돼 있지 않습니다.
 
+**캐비어트 — 텍스트를 세로로 촘촘히 쌓을 때**: 짧은 한 줄 텍스트를 세로로 겹쳐 쌓는 경우(예: 이름+역할 라벨), 텍스트 박스 자체가 이미 150%/140% 줄간격만큼의 여백을 포함하고 있어(예: 14px 텍스트의 박스 높이는 21px), 여기에 spacing 토큰값을 그대로 `itemSpacing`으로 더하면 체감 여백이 토큰값보다 훨씬 크게 느껴집니다. 이런 상황에서는 표준값(8/16)보다 작은 예외값(`2`)을 먼저 고려하고, 실제 렌더링 결과를 스크린샷으로 확인합니다.
+
 ### 1.4 Grid
 
 모바일 단일 브레이크포인트만 정의합니다(PRD 범위가 Mobile-first이므로 멀티 브레이크포인트를 도입하지 않았습니다).
@@ -173,6 +176,8 @@ Pretendard 단일 패밀리입니다. 6개 역할 카테고리로 나뉘며, 하
 
 **알려진 예외**: `Toast`에 BACKGROUND_BLUR 3건, `Bottom Navigation`에 DROP_SHADOW 2건이 실제 적용돼 있습니다. 이 두 컴포넌트(화면 위에 떠 있는 고정 오버레이 성격)는 의도된 예외로 잠정 분류하며, 공식 원칙 문서화는 후속 과제로 남겨둡니다.
 
+**카드형 컨테이너에 대응 컴포넌트가 없는 경우**: 배경을 채우거나 그림자를 넣지 않고, 1px stroke(`Background/Divider`)+`radius/medium`(8)로 경계만 표현합니다 — "그림자 대신 선" 원칙을 새로운 카드형 UI(지표 카드, 차트 컨테이너 등)에도 동일하게 적용한 것입니다.
+
 ### 1.7 Icon
 
 | 항목 | 값 |
@@ -186,7 +191,7 @@ Pretendard 단일 패밀리입니다. 6개 역할 카테고리로 나뉘며, 하
 
 ## 2. Component
 
-Component Checklist(사용자 확정 15개 항목) 기준, **14/15 완료**(Radio/Checkbox만 미착수). "완료 기준 = 컴포넌트가 만들어져 있으면 완료"(실사용 여부 무관).
+Component Checklist(사용자 확정 15개 항목) 기준, **14/15 완료**(Radio/Checkbox만 미착수). "완료 기준 = 컴포넌트가 만들어져 있으면 완료"(실사용 여부 무관). **16번째 Text Input, 17번째 Text Area는 원래 15개 체크리스트에는 없던 항목**이다. Text Input은 외부 디자인 시스템 비교 감사(`diagnosis/external-comparison-airbnb-2026-09-06.md`)에서 "실제 UI 품질에 영향을 줄 정도로 반드시 보완 필요"의 1순위로 지목되어 추가됐고, Text Area는 상품 리뷰 작성처럼 많은 양의 텍스트를 입력해야 하는 화면에 대응하기 위해 사용자 요청으로 추가됐다.
 
 | # | 체크리스트 항목 | 상태 | 실제 컴포넌트 | Variant / Property 구조 |
 |---|---|---|---|---|
@@ -205,6 +210,8 @@ Component Checklist(사용자 확정 15개 항목) 기준, **14/15 완료**(Radi
 | 13 | Tab | ✅ | `Tab Group`, `Tab Item` | Group: `Type`(2 Tab/3 Tab/Swipe) · Item: `Status`(Default/Selected/Pressed) |
 | 14 | Thumbnail | ✅ | `Thumbnail` | `Size`(xsmall/small/medium/large/Xlarge) |
 | 15 | Radio / Checkbox | ❌ **토글 가능한 진짜 컴포넌트 기준 0/2** | `Icon / Radio`, `Icon / Checkbox`(둘 다 장식용 글리프, 실제 체크/언체크 토글 불가) | `Icon / Radio`만 존재하며 실사용 0곳입니다. `Icon / Checkbox`는 실재하며 실사용도 있습니다(`Item Card / Cart` 내장 + 장바구니 화면 4곳 + `Cart / Selection Toolbar`) — 다만 Default/Disabled 둘 다 "체크됨" 모양만 있고 Unchecked variant가 없어 진짜 토글 컴포넌트로는 쓸 수 없습니다 |
+| 16 | Text Input | ✅ | `Text Input` | `Content`(Empty/Filled) × `Size`(Large) × `Status`(Default/Active/Disabled/Invalid) × `Helper Text`(None/OneLine/TwoLine) × `Input Type`(Default/Masking/Number) + `Show Required Mark`/`Show Counter`/`Show Button`(Boolean) — §2.16 참고 |
+| 17 | Text Area | ✅ | `Text Area` | `Content`(Empty/Filled) × `Status`(Default/Active/Disabled/Invalid) + `Show Counter`(Boolean) — §2.17 참고 |
 
 > 아래는 각 컴포넌트의 상세 명세(Description / When to use / Variants·States / Content rules)입니다. Figma 실측·실사용 인스턴스 콘텐츠를 근거로 작성했으며, 확신이 낮은 부분은 "확인 필요"로 명시했습니다 — 전부 초안이며 검토 대상입니다.
 
@@ -1068,6 +1075,7 @@ Figma: `6502:36818`
 **사용 가이드**
 - ✅ Do: 상품 이미지, 카테고리 아이콘 등 정사각형 이미지가 필요한 모든 곳에 사용합니다.
 - ❌ Don't: Item Card처럼 이미지가 내장된 복합 컴포넌트에는 별도로 끼워 넣지 않습니다.
+- ❌ Don't: 세로형(포스터 등) 비율의 이미지에는 사용하지 않습니다 — 전 사이즈(xsmall~Xlarge)가 정사각형 전용이라 다른 비율에는 대응하지 못합니다. 이런 경우 Foundation 토큰(Radius/Color)만으로 별도 프레임을 구성합니다.
 
 **Variants**
 
@@ -1121,6 +1129,91 @@ Figma: `6020:13544`
 
 **신규 착수 필요** — 진짜 토글 가능한 Radio/Checkbox는 여전히 0/2입니다. 다만 Checkbox는 완전한 백지 상태가 아니라, "체크됨 상태만 있는 반쪽짜리 아이콘 글리프가 이미 여러 곳에서 실사용 중"이라는 더 구체적인 출발점이 있습니다 — 새로 만들 때 이 기존 체크 아이콘 비주얼을 재사용하면서 Unchecked 상태를 추가하는 방식으로 접근할 수 있습니다.
 
+### 2.16 Text Input
+
+Figma: `6800:8767`
+
+**출처**: 원래 15개 Component Checklist에는 없던 항목입니다. 다른 Figma 파일에서 미리 만들어져 있던 컴포넌트를 사용자가 이 파일에 복사해온 것을, 이 시스템의 Foundation 토큰·Naming Convention에 맞춰 재작업해 정식 편입했습니다(외부 디자인 시스템 비교 감사 `diagnosis/external-comparison-airbnb-2026-09-06.md`에서 최우선 공백으로 지목됨).
+
+레이블·placeholder·값 입력 영역·도움말(guide text)·글자수 카운터를 하나로 묶은 텍스트 입력 필드입니다. 로그인/회원가입/검색/쿠폰코드 등 사용자가 직접 텍스트를 입력해야 하는 모든 화면에서 재사용합니다.
+
+**사용 가이드**
+- ✅ Do: 아이디·비밀번호·검색어·쿠폰코드 등 자유 텍스트 입력이 필요한 모든 곳에 사용합니다.
+- ✅ Do: 값 검증이 필요하면 `Status=Invalid`+`Helper Text`로 에러 문구를 표시합니다.
+- ❌ Don't: 옵션 중 하나를 고르는 선택 UI에는 쓰지 않습니다 — `Chip`/`Option Chips`(§2.4)를 씁니다.
+- ❌ Don't: 검색 결과 목록 자체에는 쓰지 않습니다 — 검색창 자체(입력)는 Text Input, 결과 목록은 `List`(§2.10)입니다.
+- **트레일링 버튼(`Show Button`)의 활성/비활성 여부는 Text Input 자체 속성이 아닙니다** — 중첩된 `Button` 인스턴스를 직접 선택해 그 인스턴스 고유의 `Status`(Default/Pressed/Disabled)를 바꿔서 제어합니다. Figma의 `componentPropertyReferences`가 `visible`/`characters`/`mainComponent`만 지원해, Text Input 레벨에서 Boolean 하나로 중첩 컴포넌트의 Variant 선택 자체를 스위칭할 수는 없기 때문입니다.
+- **`Status=Default`의 라이브러리 기본 모습에는 트레일링 버튼이 없습니다** — `Show Button`을 지원하는 유일한 변형(`Content=Empty, Status=Default`)이지만, 그 마스터 자체의 기본 표시 상태는 버튼이 꺼진 채입니다(버튼은 `Show Button` Boolean을 인스턴스에서 켜야 나타남). `Status=Default`와 버튼 유무는 서로 무관한 축입니다.
+- **`TwoLine`의 각 줄에 실제로 입력되는 문구를 바꾸려면, `Guide Row 1`/`Guide Row 2`로 톤(Success/Error)을 먼저 고른 뒤 그 중첩된 `Guide Row` 인스턴스를 직접 선택해 자체 `Text` 속성을 편집합니다** — Text Input 레벨에서 문구까지 하나의 속성으로 노출하는 건 Figma가 "인스턴스 하위 레이어에는 컴포넌트 속성 참조를 걸 수 없다"는 제약 때문에 불가능해, 톤 선택(Text Input 레벨)과 문구 편집(중첩 인스턴스 레벨)이 2단계로 나뉩니다.
+- **`Content=Empty`는 상태(Status)와 무관하게 고를 수 있습니다** — `Disabled`/`Default`/`Active` 세 가지 모두 `Empty` 예시가 존재합니다. `Empty`를 고른다고 자동으로 비활성처럼 보이지 않습니다.
+- **`Helper Text=OneLine`의 성공/에러 톤은 아직 `Status`에 종속돼 있습니다**(Active→Success, Invalid→Error) — 줄 1개짜리라 "일부만 통과" 개념이 성립하지 않고, 이전에 독립 축으로 분리를 시도했다가 Figma 제약(여러 variant에 걸친 속성 공유 문제)으로 되돌린 상태입니다. 다른 조합이 필요하면 중첩 아이콘 인스턴스를 직접 교체하세요.
+- **guide text(도움말) 아이콘의 성공/에러 톤은 독립된 속성이 아니라 `Status`에 종속돼 있습니다** — `Status=Active`+`Helper Text≠None`이면 항상 `Icon / Status / Success`(파랑 체크), `Status=Invalid`면 항상 `Icon / Status / Error`(빨강 느낌표)입니다. 별도의 `Guide Type` 같은 독립 속성으로 분리를 시도했으나, Figma의 컴포넌트 속성(Boolean/INSTANCE_SWAP 불문)은 여러 variant에 걸쳐 바인딩하면 값이 variant별로 독립되지 못하고 전체가 하나의 값을 공유한다는 제약을 확인해 되돌렸습니다 — 다른 조합(예: Active 상태에서 에러 톤 안내)이 필요하면 중첩된 아이콘 인스턴스를 직접 선택해 `Icon / Status / Error`(또는 `Success`)로 바꿔 끼우면 됩니다.
+
+**Anatomy**: `label`(라벨+`Show Required Mark` 별표+`Show Counter` 글자수) → `text box`(placeholder/입력값+커서+`Show Button` 트레일링 버튼) → `guide text group`(`Helper Text`, `Icon / Status / Success`\_또는\_`Icon / Status / Error` 인스턴스+안내문구)
+
+**Variants**
+
+| Property | Values | Default | 비고 |
+|---|---|---|---|
+| Content | Empty / Filled | Empty | 필드 안에 무엇이 들어있는지를 나타내는 콘텐츠 채움 상태(정보 표시용) — 실제 입력 여부에 따라 화면에서 자연히 전환됨. `Status`(인터랙션/검증 상태)와 개념이 겹쳐 보인다는 지적으로 `Type`에서 `Content`로 개명(§3 참고). 원래 있던 `Done` 값은 삭제 — 사실상 "트레일링 버튼 활성화 여부"를 숨겨서 실어 나르던 값이었음이 밝혀져, 아래 Content 규칙대로 처리하기로 함 |
+| Size | Large | Large | 현재 Large만 존재(open-ended — 필요해지면 Medium/Small 추가) |
+| Status | Default / Active / Disabled / Invalid | Default | Active=포커스(파란 테두리+커서), Disabled=회색 배경, Invalid=빨간 테두리(`Feedback/Error`) |
+| Helper Text | None / OneLine / TwoLine | None | 값에 따라 컴포넌트 높이가 66→90→112px로 변함(멀티라인 Variant, Boolean 아님). `TwoLine`의 두 줄은 각각 `Guide Row 1`/`Guide Row 2`(INSTANCE_SWAP, `Guide Row` 컴포넌트의 Success·Error 중 선택) 속성으로 서로 독립적으로 톤을 고를 수 있습니다 — 아이콘과 텍스트 색이 함께 바뀌는 하나의 컴포넌트를 통째로 스왑하는 방식이라 아이콘·텍스트 색 불일치가 생기지 않습니다. 비밀번호 입력 규칙처럼 "일부 조건만 통과"하는 상황을 표현하기 위함입니다(예: "8자 이상"은 Success, "특수문자 포함"은 Error). `OneLine`(줄 1개)은 아직 `Status`에 종속돼 있습니다(§2.16 사용 가이드 참고) |
+| Show Required Mark | Boolean | false | 라벨 옆 빨간 `*` |
+| Show Counter | Boolean | false | 라벨 행 우측 "N/30" 글자수 카운터 |
+| Input Type | Default / Masking / Number | Default | 입력값의 종류를 나타냅니다. `Default`=일반 텍스트, `Masking`=입력값을 점(`●`)으로 가리는 비밀번호류 입력, `Number`=숫자 입력. `Number`는 Figma 상에서는 `Default`와 시각적으로 동일하게 그려집니다 — 실제 키보드 타입 등 구현 단계의 차이만 있고 디자인 차이는 없습니다 |
+| Show Button | Boolean | false | 트레일링 CTA형 버튼(예: "인증하기") — OTP/인증번호 입력 패턴 전용 |
+
+**Content**
+- 라벨은 "아이디"/"비밀번호"처럼 2~5자 명사형
+- placeholder는 입력 조건을 짧게 안내("영문, 숫자 조합 8자 이상")
+- guide text는 성공(파랑 체크)/에러(빨강 느낌표) 톤 구분, `Icon / Status` 컴포넌트를 인스턴스로 재사용
+- 카운터는 "N/30" 형식(현재값/최대값)
+
+**재작업 내역** — 다른 파일에서 복사됐던 것을 이 시스템 컨벤션에 맞춰 다음과 같이 재작업했습니다.
+- Property 축 이름을 Naming Convention(§3)에 맞춰 교환·정리: 원본의 인터랙션 축(`State`=Active/Default/Disabled/Invalid)은 `Status`로 이름을 바꿨습니다(상태 축은 항상 `Status`라는 규칙 때문). 원본의 콘텐츠 채움 축(`Status`=Empty/Filled/Done)은 처음엔 `Type`으로 옮겼으나, `Status`와 개념이 겹쳐 보인다는 지적으로 다시 `Content`로 개명했습니다(§3 각주 참고). `Required`/`Counter`/`Button`은 `Show {명사}` 접두사로 통일했습니다.
+- 색상 195곳(fill 164 + stroke 31)을 전부 이 파일의 로컬 Foundation 토큰(`Color/Primitive/*`, `Color/Semantic/State/Primary`, `Color/Semantic/Feedback/Error`)에 재바인딩했습니다 — 원본 파일의 외부 참조는 0건 남았습니다.
+- 텍스트 86곳을 전부 로컬 텍스트 스타일에 재바인딩했습니다. 15px Bold 2곳은 새 스타일을 만들지 않고 기존 `text/heading/xxsmall`(스펙이 정확히 동일)을 재사용했습니다.
+- 모서리 radius 68곳을 `radius/medium`(8, 입력창)·`radius/full`(999, 아이콘·커서)에 바인딩했습니다.
+- guide text 아이콘(성공/에러) 11곳을 raw 도형에서 정식 인스턴스로 교체했습니다. 에러 톤은 기존 `Icon / Status / Error`를 재사용했고, 성공 톤은 원본에 이미 있던 체크마크 글리프를 승격해 신규 `Icon / Status / Success` 컴포넌트로 만들었습니다(Dialog·Item Card/Cart의 기존 고아 컴포넌트 참조 문제는 이번 범위에 포함하지 않음 — `§5` 백로그 그대로 유지).
+- 컴포넌트를 `① Components` 페이지로 정리하고 이름을 `Text Input`으로 붙였습니다.
+- Spacing(itemSpacing/padding)은 값 자체가 이미 기존 토큰(2, 4)과 일치해 시각적으로는 문제 없으나, Variable 바인딩까지는 이번 범위에서 하지 않았습니다 — 후속 과제로 `§5`에 남깁니다.
+- **`Show Required Mark`/`Show Counter`/`Show Button`을 VARIANT 축(True/False 조합별로 별도 컴포넌트가 존재)에서 `Button`의 `Show Leading Icon` 등과 동일한 진짜 BOOLEAN 컴포넌트 속성으로 재구성**했습니다(사용자 지적으로 발견). 같은 4축(`Type`/`Status`/`Helper Text`/`Masking`) 조합 안에서 이 3개 값만 다르던 변형들을 하나로 병합(예: 26개→11개)하고, 병합 과정에서 누락된 레이어(`*`, 카운터, 트레일링 버튼)는 다른 변형에서 복제해 보강했습니다. 트레일링 버튼을 끌 때 입력창이 328px 전체 폭으로 자연스럽게 늘어나도록 `text box` 래퍼의 `layoutSizingHorizontal`도 `FILL`로 함께 정리했습니다. 이 과정에서 우연히 생겼던 변형 중복 오류(`componentPropertyDefinitions` 읽기 실패)도 함께 발견해 제거했습니다.
+- **트레일링 버튼("인증하기")이 우리 로컬 `Button`이 아니라 원본 외부 파일의 REMOTE 컴포넌트를 그대로 참조하고 있던 것을 사용자 지적으로 발견해 재연결**했습니다. 로컬 `Button`의 `Type=Primary, Size=Medium`(Default/Disabled)으로 `swapComponent()` 처리 — 텍스트("인증하기")는 유지됐으나, 우리 Button이 기본으로 갖고 있는 Leading/Trailing 아이콘 placeholder가 함께 켜져 있어 `Show Leading Icon`/`Show Trailing Icon`을 껐습니다. swap 직후 `componentPropertyReferences`로 바인딩된 `visible`이 일시적으로 꺼지는 것을 확인해 다시 켜서 바로잡았습니다(스크린샷으로 Show Button on/off 리플로우 재확인 완료).
+
+### 2.17 Text Area
+
+Figma: `6998:6`
+
+**출처**: 원래 15개 Component Checklist에는 없던 항목입니다. 상품 리뷰 작성처럼 많은 양의 텍스트를 입력해야 하는 화면에 대응하기 위해 사용자가 실제 사용 예시 화면(`6801:4770`, "review-writing-screen")을 참고해 신규 등록을 요청했습니다.
+
+`Text Input`(§2.16)과 같은 "텍스트를 입력받는" 목적이지만, `Text Input`이 테두리 있는 짧은 한 줄 필드인 것과 달리 **테두리 없이 화면 폭 전체를 쓰는 멀티라인 입력 영역**입니다 — 리뷰 본문처럼 여러 문장을 길게 작성하는 용도로 별도 컴포넌트로 분리했습니다.
+
+**사용 가이드**
+- ✅ Do: 상품 리뷰 본문, 문의 내용처럼 여러 줄의 자유 텍스트를 입력받는 곳에 사용합니다.
+- ✅ Do: 한 줄짜리 제목/요약 입력에는 이 컴포넌트 대신 `Text Input`을 사용합니다(참고 화면의 "한 줄 요약" 필드가 그 예).
+- ❌ Don't: 짧은 값 하나만 받는 곳(아이디, 비밀번호, 검색어 등)에는 쓰지 않습니다 — `Text Input`(§2.16)을 씁니다.
+
+**Anatomy**: `placeholder`/`value`(본문 텍스트, 비었을 때는 placeholder 스타일) → (`Status=Active`일 때만) 텍스트 앞 커서 → (`Show Counter`) 우측 정렬 글자수 카운터 → (`Status=Invalid`일 때) 하단에 `Guide Row`(§2.16 참고, Error 톤) 안내 문구
+
+**Variants**
+
+| Property | Values | Default | 비고 |
+|---|---|---|---|
+| Content | Empty / Filled | Empty | `Text Input`과 동일한 개념 — 필드 안에 무엇이 들어있는지 |
+| Status | Default / Active / Disabled / Invalid | Default | `Active`는 텍스트 앞에 커서가 붙습니다(포커스 표시). `Disabled`는 `Gray/50` 배경 워시로만 표시됩니다 — 테두리가 없는 컴포넌트라 `Text Input`처럼 테두리·배경을 함께 바꾸는 대신 은은한 배경 틴트 하나로만 비활성을 표현합니다. `Invalid`는 하단에 `Guide Row`(Error)가 붙습니다 |
+| Show Counter | Boolean | false | 우측 정렬 글자수 카운터("N/500" 형식) 표시 여부 |
+
+**Content**
+- placeholder는 무엇을 써야 할지 안내하는 완전한 문장 형태("사용해 보신 후 느낀 점을 남겨주세요...")
+- 카운터는 "N/500"처럼 현재값/최대값 형식(최대값은 실제 글자 수 제한에 맞게 화면마다 다를 수 있음)
+- `Invalid`의 안내 문구는 `Text Input`과 마찬가지로 `Guide Row` 인스턴스를 직접 선택해 편집합니다(§2.16 "남은 제약" 참고 — Text Area 레벨 속성으로는 문구를 노출하지 않음)
+
+**구축 메모**
+- 참고 화면에는 `Content=Empty, Status=Default`(placeholder만 있는 상태) 하나만 나와 있었고, 나머지 상태(Active/Disabled/Invalid, Filled 예시, 카운터)는 `Text Input`과 일관된 품질로 맞추기 위해 이번에 함께 만들었습니다.
+- 마스터 컴포넌트의 높이는 콘텐츠에 맞춰 자동으로 늘어나는 HUG 방식입니다 — 실제 화면에 배치할 때는 그 화면에 맞는 고정 높이나 `FILL`로 인스턴스 크기를 조정해서 씁니다(참고 화면에서도 남은 화면 영역을 꽉 채우는 형태였습니다).
+- `Show Counter`, `Invalid`의 `Guide Row`는 전부 `Content=Filled, Status=Active`/`Invalid` 마스터 각각 하나에만 실제로 구조가 존재합니다(Text Input과 동일한 원칙 — 모든 조합에 억지로 레이어를 추가하지 않음).
+
 ---
 
 ## 3. Naming Convention
@@ -1131,7 +1224,7 @@ Figma: `6020:13544`
 - **패밀리(변형이 여러 세트로 나뉘는 경우)**: `이름 / 하위이름` 형식, 슬래시 앞뒤 공백 포함(예: `Option Chips / Size`, `Icon / Checkbox`).
 - **Property 이름**:
   - 상태·선택 여부를 나타내는 축 → **`Status`**(Title Case) 하나로 통일. Default/Selected/Pressed/Error/Warning 등 성격이 달라도 전부 이 키를 쓴다.
-  - 콘텐츠·글리프 종류를 나타내는 축(상태가 아닌 것) → **`Type`**.
+  - 콘텐츠·글리프 종류를 나타내는 축(상태가 아닌 것) → **`Type`**. 단, "필드에 콘텐츠가 얼마나 들어찼는지"처럼 값 자체가 상태처럼 읽히는 콘텐츠 축은 `Type`이 `Status`와 개념적으로 겹쳐 보일 수 있다 — 이런 경우 `Type` 대신 `Content`처럼 더 구체적인 이름을 쓴다(예: `Text Input`의 `Content`=Empty/Filled/Done, `Status`=Default/Active/Disabled/Invalid와 구분).
   - 크기 축 → `Size`.
   - **Boolean 축** → **`Show {명사}`** 접두사로 통일한다 — 실제 예시: `Show Icons`(Bottom Sheet), `Show Scroll`(Dialog/Bottom Sheet), `Show Unit Price`(Price Block), `Show Status Badge`(Review/Card), `Show Row 1`~`Show Row 4`(Review/Summary), `Show Leading Icon`/`Show Trailing Icon`(Button 계열). 반례 없다.
   - Figma 기본값(`Property 1`, `Variant2` 등)을 그대로 남기지 않는다 — 반드시 의미 있는 이름으로 교체.
@@ -1179,11 +1272,17 @@ Figma: `6020:13544`
 **컴포넌트**
 - **Checkbox/Radio 진짜 인터랙티브 버전** — `Icon / Checkbox`/`Icon / Radio` 둘 다 "체크됨/선택됨" 모양만 있는 장식용 글리프라 Unchecked/미선택 상태를 표현 못 함(§2.15 참고) — 기존 체크 아이콘을 재사용해 Unchecked variant를 추가하는 방식으로 신규 제작 필요
 - PRD §11.2가 예상했던 컴포넌트 중 여전히 전무한 것: Divider(독립 컴포넌트, 현재는 ad hoc 라인만 존재) · Accordion · Anchor Navigation · Carousel + Indicator · Ratio Visualization · Empty State · Skeleton · Promotion Badge(Rocket/Status Badge와 별개) · Ad Container · Evidence Chip · Reason Label
-- **Dialog Error/Warning 헤더 아이콘이 고아 컴포넌트 참조 중**: Dialog의 `Status=Error`/`Warning` variant 헤더 아이콘 인스턴스가 정식 `Icon / Status / Error`·`Icon / Status / Warning`(둘 다 실사용 0곳인 별개 아이콘)이 아니라, 이름조차 없는 고아 컴포넌트("x-01", `17:1119`, 부모 없음)를 참조하고 있다. 정식 `Icon / Status` 계열로 재연결이 필요하나 이번 작업 범위 밖이라 지금 고치지 않는다.
+- **Chart/데이터 시각화** — 색상·형태·축/범례 규칙이 전혀 없음. 비커머스 검증(활동 대시보드, `design-system/validation/activity-dashboard.md`)에서 처음 필요해져 발견됨.
+- **통계(Stat/KPI) 카드** — "큰 숫자+작은 라벨" 조합에 대한 타이포그래피·배치 규칙 없음. 위와 같은 검증에서 발견.
+- **비인터랙티브 상태/태그 표시 컴포넌트** — `Label`(콘텐츠가 커머스 전용 Type)과 `Chip`(인터랙티브 전제) 둘 다 "정보 표시 전용 태그"에 맞지 않음. 영화 상세·활동 대시보드 검증 양쪽에서 반복 발견된 구조적 공백.
+- **Dialog Error/Warning 헤더 아이콘이 고아 컴포넌트 참조 중**: Dialog의 `Status=Error`/`Warning` variant 헤더 아이콘 인스턴스가 정식 `Icon / Status / Error`·`Icon / Status / Warning`(둘 다 실사용 0곳인 별개 아이콘)이 아니라, 이름조차 없는 고아 컴포넌트("x-01", `17:1119`, 부모 없음)를 참조하고 있다. `Item Card / Cart`의 개별 삭제 아이콘도 같은 고아 컴포넌트를 참조 중임을 장바구니 검증에서 추가로 확인(`design-system/validation/cart-screen.md`). 정식 `Icon / Status` 계열로 재연결이 필요하나 이번 작업 범위 밖이라 지금 고치지 않는다.
 
 **Foundation**
 - Elevation 예외(Toast/Bottom Navigation) 공식 원칙화 여부
 - Spacing "12"(4배수도 예외 5종도 아닌 값) 정체 재확인
+- Text Input의 itemSpacing/padding을 Spacing Variable에 바인딩(현재는 값만 기존 토큰(2, 4)과 일치, Variable 바인딩은 미실행)
+- Text Input의 `Status` VARIANT 속성 `defaultValue`가 `Active`로 남아있음(Boolean 전환 중 변형 병합의 부산물) — Figma API가 VARIANT `defaultValue`를 직접 변경 못 하게 막아 자식 순서 재배치가 필요, 영향은 Assets 패널 미리보기 조합이 이상적이지 않은 정도로 경미
+- **Text Input COMPONENT_SET에 "유령 중복" 재발 위험이 있음** — 지금까지 최소 3차례(스크립트 편집 중 2회, 사용자의 수동 Figma 편집 중 1회) 기존 자식이 완전히 동일한 이름·내용으로 통째로 복제되는 현상이 발생했다(원인 미확정, 원본이 다른 파일에서 복사돼온 이력과 관련된 것으로 추정). 이 컴포넌트를 편집한 뒤에는 항상 자식 개수·중복 이름 여부를 재확인할 것을 권장한다. 상세는 `diagnosis/text-input-integration-2026-09-06.md` 참고
 
 ---
 
@@ -1201,6 +1300,7 @@ Figma: `6020:13544`
 
 **패턴 2 — 스크롤형 화면**(상품 상세페이지, 장바구니)
 헤더 바로 뒤에 divider 없이 첫 콘텐츠 블록이 바로 시작합니다(목록형과 다른 점). `spacing → 콘텐츠 블록 → spacing → divider(8px) → spacing → 다음 블록` 리듬이 반복됩니다 — **1px divider는 같은 섹션 안의 아이템 구분, 8px divider는 서로 다른 섹션(상품정보/결제정보/추천상품/리뷰) 구분**으로 두께 자체가 위계를 나타냅니다. 가로 캐러셀(추천상품)은 항상 `Section Header` 바로 아래 간격 없이 붙습니다.
+- **divider 폭**: 헤더→콘텐츠 경계처럼 화면을 가로지르는 구분선은 360px 풀블리드, 같은 섹션 안에서 아이템끼리 구분하는 1px divider는 328px(화면폭−마진 32)로 좌우 16px 인셋을 유지합니다. 아이템 사이는 `아이템 → 16px → divider → 16px → 아이템` 리듬입니다 — divider를 아이템에 바로 붙이지 않습니다.
 
 **패턴 3 — 사이드바+콘텐츠 화면**(Category)
 상단 `Section Header + Quick Badge Row` → divider → 좌측 `Category Tab` 세로 목록 + 우측 콘텐츠 그리드 좌우 분할.
@@ -1241,3 +1341,19 @@ Figma: `6020:13544`
 | v0.28 | 2026-09-05 | §1~§5 전체에서 과거 이력 서술 제거(Figma 변경 없음, 순수 삭제·정리): 사용자가 공개 디자인 시스템 문서엔 "해결된 이슈"/"바로잡은 사실" 같은 과거 작업 이력이 없다고 지적 — decisions.md를 이력 저장소로 일원화하기로 하고, Explore로 전체 문서(§1~변경이력)를 감사해 "언제/어떻게 지금 상태에 도달했는지" narrate하는 Type A 서술(약 48건, decisions.md 표본 16건 대조 결과 전부 이미 기록돼 있음 확인)은 삭제, "지금도 확정 안 됐다"는 Type B 현재 캐비어트(약 30건)는 날짜·감사 프레이밍만 벗기고 유지, 한 문장에 둘이 섞인 Ambiguous 약 26건은 수술적으로 분리. §2 요약 체크리스트 표의 ✅/❌ 상태 열과 각 컴포넌트의 ✅ Do/❌ Don't 불릿, 변경 이력 표는 원래 성격이 달라 전부 그대로 유지(diff로 완전 동일함 확인). §5의 이미 해결된 3개 취소선 항목은 §2.6/데이터에 이미 반영돼 있어 목록에서 완전히 삭제. 재작성 전/후 diff로 node ID 50→49개(삭제된 Review/Summary 관련 1개는 순수 조사 경위용이라 decisions.md에 이미 기록된 사실, 손실 아님), 실사용 언급 75→60건(narrate성 언급만 감소, 현재 사실은 보존), Do/Don't 불릿 49개 완전 동일, 변경 이력 표 byte 단위로 완전 동일함을 확인 |
 | v0.29 | 2026-09-05 | 새 섹션 `## 0. 이 문서 사용 원칙` 신규 추가(Figma 변경 없음, 문서만) — 3-1(새 컴포지션/새 화면 제작) 논의에서 사용자가 승인한 프로세스 규칙 5개(컴포넌트 우선/토큰 전용/컴포지션 우선/모호함 표면화/사후 검증)를 명문화. §1~§5 내용 자체는 변경 없음 |
 | v0.30 | 2026-09-05 | 남은 별표 논의 항목 전부를 한 번에 배치 실행(Figma 실행 + 문서 반영): (1) `Message Box` 컴포넌트 신규 생성(`6735:3455`, `Status`=Error/Warning, 정보 아이콘+텍스트, 닫기 버튼 없음) — §2.7 문서화, §2 체크리스트 14/15로 갱신 (2) 신규 Semantic 색상 토큰 4개 추가(기존 Primitive alias) — `Feedback/Error Background`→`Error/50`, `Feedback/Error Text`→`Error/600`, `Feedback/Warning Background`→`Warning/50`, `Feedback/Warning Text`→`Warning/600`, Message Box에 바인딩 (3) Dialog/Bottom Sheet dim 오버레이=`Background/Overlay` 50% 불투명도, `Feedback/Success`=파랑 렌더링을 공식 사용 규칙으로 §1.1에 명문화 (4) §1.4 Grid에 4컬럼(76px)과 `Item Card/Grid` 160px의 산술적 정합성 추가 (5) §2.9 Label에 Label/Chip/Rocket Badge/Status Badge/Spec Row 비교표 신규 추가 (6) §3에 Variant vs Boolean 선택 기준 추가 (7) §4에 자유 텍스트 넘침 처리 기본 원칙 추가(8개→11개) (8) §5에서 해결된 3항목(Message Box, App Bar Type 재검토, 토큰 표기 통일) 제거 — App Bar Type은 "현행 유지", 토큰 표기는 "카테고리별 현행 유지"로 결론 (9) 신규 `## 6. Screen Composition Patterns` 섹션 추가(목록형/스크롤형/사이드바형 3패턴 + 공통 규칙, 실제 화면 5개 실측 근거) — Category 화면 `Status Bar`를 32px→44px로 통일(Figma 실행) |
+| v0.31 | 2026-09-05 | "영화 상세" 검증 화면(`design-system/validation/movie-detail-screen.md`) 피드백 4건 중 일반화 가능한 3건 반영(Figma 변경 없음, 문서만): (1) §0에 6번 원칙 추가 — 참고 화면의 예외 사례보다 컴포넌트 자체의 Content·사용가이드 규칙을 우선한다(App Bar 타이틀을 임의로 숨겼던 실수가 근거) (2) §2.14 Thumbnail 사용가이드에 Don't 추가 — 전 사이즈가 정사각형 전용이라 세로형(포스터 등) 비율에는 못 쓴다는 것을 실제 시도로 확인 (3) §1.3 Spacing에 캐비어트 추가 — 짧은 텍스트를 세로로 촘촘히 쌓을 때 150%/140% 줄간격이 spacing 토큰과 중첩돼 체감 여백이 커지는 현상을 실측으로 확인, 이런 경우 작은 예외값(`2`)을 우선 고려하도록 명시. 나머지 1건(한줄 소개를 설명 섹션에 포함)은 화면 하나의 콘텐츠 배치 판단이라 일반 원칙화하지 않고 validation 파일에만 기록 |
+| v0.32 | 2026-09-05 | "장바구니" 검증 화면(`design-system/validation/cart-screen.md`) 피드백 3건 중 일반화 가능한 1건 반영(Figma 실행 + 문서): §6 "패턴 2"에 divider 폭 규칙 추가 — 헤더→콘텐츠 경계는 360px 풀블리드, 섹션 내부 아이템 구분은 328px 인셋(좌우 16px), 아이템 사이는 "아이템-16px-divider-16px-아이템" 리듬이라는 것을 실제 화면 대조로 확인. 나머지 2건(오토레이아웃 FILL+padding 누락으로 카드 좌우 여백이 사라졌던 것, 추천 상품 캐러셀 부재)은 Figma 구현 기법·제품 판단 영역이라 design.md에는 반영하지 않고 validation 파일에만 기록 |
+| v0.33 | 2026-09-05 | 비커머스 2차 검증 "개인 활동 대시보드"(`design-system/validation/activity-dashboard.md`) 결과 반영(Figma 변경 없음, 문서만): (1) §1.6 Elevation에 카드형 컨테이너 구성 원칙 추가 — 대응 컴포넌트가 없을 때 배경·그림자 대신 1px stroke(`Background/Divider`)+`radius/medium`으로 경계를 표현("그림자 대신 선" 원칙의 일반화) (2) §5에 신규 백로그 3건 추가 — Chart/데이터 시각화(색상·형태 규칙 전무), 통계(Stat/KPI) 카드, 비인터랙티브 상태/태그 표시 컴포넌트(영화 상세 검증과 함께 반복 발견돼 구조적 공백으로 격상) (3) `Item Card / Cart`도 Dialog와 동일한 고아 컴포넌트("x-01") 참조 문제가 있음을 §5에 추가 기록. 종합 판단: Foundation·화면구성 원칙은 도메인 무관하게 통했으나 §2 Component 대다수(콘텐츠를 담는 컴포넌트)는 세 차례 비커머스 검증 전부에서 재사용되지 못해, 전체 문서는 아직 "특정 커머스 UI를 설명하는 수준(A)"에 더 가깝다고 판단 |
+| v0.34 | 2026-09-06 | §2에 16번째 컴포넌트 `Text Input` 신규 추가(Figma 실행 + 문서). 다른 Figma 파일에서 복사돼온 컴포넌트(`6800:8767`)를 이 시스템 컨벤션에 맞춰 재작업: Property 축 이름 교환(원본 `Status`→`Type`, 원본 `State`→`Status`) 및 `Show {명사}` Boolean 접두사 통일, 색상 195곳·텍스트 86곳을 전부 로컬 Foundation 토큰/텍스트 스타일로 재바인딩(외부 참조 0건), radius 68곳 바인딩, guide text 아이콘 11곳을 raw 도형→정식 인스턴스로 교체(에러 톤은 기존 `Icon / Status / Error` 재사용, 성공 톤은 신규 `Icon / Status / Success` 컴포넌트 생성), `① Components` 페이지로 정리. 15px Bold 텍스트는 새 스타일을 만들지 않고 기존 `text/heading/xxsmall` 재사용(스펙 동일 확인 후 사용자 승인). §5에 후속 과제 2건(Spacing Variable 미바인딩, Masking=MaskedWithLabel 라벨 태그 최종 비주얼 확정) 추가. 출처: `diagnosis/external-comparison-airbnb-2026-09-06.md` 감사에서 지목된 최우선 공백 |
+| v0.35 | 2026-09-06 | `Text Input`의 `Show Required Mark`/`Show Counter`/`Show Button`이 이름만 Boolean 규칙을 따르고 실제로는 VARIANT 축(True/False별 별도 컴포넌트)이었던 것을 사용자가 지적 — `Button`의 `Show Leading Icon` 등과 동일한 진짜 BOOLEAN 속성으로 재구성(Figma 실행). 같은 4축 조합 안에서 이 3개 값만 다르던 변형을 병합(26→11개), 누락 레이어는 복제로 보강, 트레일링 버튼 숨김 시 입력창이 전체 폭으로 늘어나도록 auto-layout sizing도 정리. 병합 전 우연히 존재하던 변형 중복 오류(컴포넌트 속성 읽기 실패)도 함께 발견·제거 |
+| v0.36 | 2026-09-06 | `Text Input`의 트레일링 버튼("인증하기")이 우리 로컬 `Button`이 아니라 원본 복사본의 REMOTE 컴포넌트(외부 파일 라이브러리)를 참조 중이던 것을 사용자가 지적 — 로컬 `Button`의 `Type=Primary, Size=Medium`(Default/Disabled)으로 `swapComponent()` 재연결(Figma 실행). 텍스트는 유지됐으나 Button 기본 Leading/Trailing 아이콘 placeholder가 함께 켜져 있어 꺼서 정리, swap 직후 `Show Button` visible 바인딩이 일시적으로 풀리는 것을 발견해 재확인 후 복구. Show Button on/off 리플로우 회귀 없음을 스크린샷으로 재검증 |
+| v0.37 | 2026-09-06 | `Text Input`의 `Type`(Empty/Filled/Done)이 `Status`(Default/Active/Disabled/Invalid)와 개념적으로 겹쳐 보인다는 사용자 지적 — `Type`을 `Content`로 개명(Figma 실행, 값은 그대로, 11개 자식 이름 자동 반영). §3 Naming Convention에 "콘텐츠 축이 상태처럼 읽히면 `Type` 대신 더 구체적인 이름을 쓴다"는 예외 규칙과 근거를 각주로 추가 |
+| v0.38 | 2026-09-06 | 사용자가 트레일링 버튼 활성화 여부도 Boolean으로 만들고 싶다고 요청 — 확인 결과 `Content=Done` 값 하나가 그 역할을 몰래 하고 있었음(11개 중 1곳에서만 쓰이고 화면상 `Content=Empty`와 동일, 차이는 내부 `Button` 인스턴스의 `Status`뿐). Figma `componentPropertyReferences`가 `visible`/`characters`/`mainComponent`만 지원해(2026-09-01 Item Card 사례로 이미 확인된 제약) 새 Boolean으로 중첩 Variant 자체를 스위칭할 수는 없어, 대신 `Done` 값을 완전히 삭제하고 `Content`를 Empty/Filled 2개로 단순화(Figma 실행, 10개 변형으로 정리). 트레일링 버튼의 활성/비활성은 중첩 `Button` 인스턴스를 직접 선택해 그 `Status`로 제어한다는 사용 가이드를 §2.16에 추가 |
+| v0.39 | 2026-09-06 | 사용자가 guide text 아이콘의 성공/에러 톤도 Boolean이 아닌 별도 Type(Success/Error)으로 분리하고 싶다고 요청 — `Guide Type` INSTANCE_SWAP 속성을 만들어 6개 아이콘 인스턴스에 시도했으나(Figma 실행), 여러 variant에 걸쳐 바인딩된 컴포넌트 속성은 variant별 독립값을 못 갖고 전체가 하나의 값을 공유한다는 제약을 발견 — 전부 원래 상태(Status=Active→Success, Invalid→Error)로 되돌림(Figma 실행). 사용자와 합의해 분리를 포기하고, 이 종속 관계와 다른 조합이 필요할 때의 대안(중첩 아이콘 인스턴스 직접 교체)을 §2.16 사용 가이드에 명시하는 쪽으로 마무리 |
+| v0.40 | 2026-09-06 | 사용자가 입력값의 종류(기본 텍스트/비밀번호/숫자)도 variant로 고를 수 있으면 좋겠다고 제안 — 기존 `Masking`(None/Masked/MaskedWithLabel)과 개념이 겹쳐, `Masking`을 대체하는 `Input Type`(Default/Masking/Number)으로 재구성하기로 합의(Figma 실행). 아직 최종 비주얼 미확정이던 `MaskedWithLabel` 변형(§5 백로그 항목이던 라벨 태그 프로토타입 포함)은 삭제, `Number`는 대표 변형을 clone해 신규 추가(Figma 상 `Default`와 시각적으로 동일, 실제 키보드 타입 차이는 구현 단계에서만 발생). 10개 변형으로 정리, 스크린샷으로 회귀 없음 확인 |
+| v0.41 | 2026-09-06 | 사용자가 `Number` variant를 직접 삭제 후, "Content=Empty가 Disabled처럼 보인다"/"Status=Default가 버튼 타입인 게 어색하다"고 지적 — 검토 결과 `Content=Empty, Status=Active`(빈 칸+포커스) 조합이 삭제돼 있었고, `Status=Default`의 유일한 예시가 트레일링 버튼을 항상 포함하고 있었음을 확인. 사용자가 Figma를 직접 만지던 중 또 한 번 "유령 중복"(완전히 동일한 자식이 통째로 복제되는 현상, 이번이 3번째 발생)도 함께 발견해 정리(Figma 실행). `Content=Empty, Status=Active` 변형을 실측 토큰대로 재구성(테두리 `Gray/500`, 커서 추가)해 복원, `Status=Default` 마스터(`6800:9088`) 자체의 트레일링 버튼 기본 표시를 꺼서 "버튼 없는 대기 상태"가 기본 모습이 되도록 수정(Boolean으로 켤 수 있는 능력은 유지). 9개 변형으로 정리, 개별 노드 스크린샷으로 정상 확인(전체 그룹 스크린샷은 캐시 지연으로 일시적 겹침 표시 — 개별 확인이 신뢰 가능한 기준) |
+| v0.42 | 2026-09-06 | 사용자가 "Helper Text=OneLine이면 Success, TwoLine이면 Error로 나온다"고 지적 — 확인 결과 `TwoLine` 조합이 파일 전체에 단 하나(Invalid+Masking)뿐이라 생긴 커버리지 착시였음. `TwoLine` 삭제를 검토했으나 사용자가 "비밀번호 입력 규칙 안내에 주로 쓸 예정이라 조건별 부분 통과 표시가 필요하다"고 확인, 유지하기로 함. 대신 `Guide Icon 1`/`Guide Icon 2`(INSTANCE_SWAP, Success/Error 중 선택) 속성을 신설해 `TwoLine`의 두 줄이 서로 독립적으로 톤을 가질 수 있도록 함(Figma 실행) — 지난번 "여러 variant에 걸친 속성 공유" 문제와 달리 이번엔 한 variant 안의 서로 다른 두 레이어에 각각 전용 속성을 1:1 바인딩하는 것이라 정상 작동함을 테스트 인스턴스로 확인. 유일한 `TwoLine` 예시의 placeholder 텍스트도 실제 비밀번호 규칙 문구("8자 이상 입력했어요"/"특수문자가 포함되지 않았어요")로 교체, 한쪽은 Success·한쪽은 Error로 실사용 맥락을 보여주는 예시로 완성 |
+| v0.43 | 2026-09-06 | 사용자가 "아이콘만 따로 고르지 말고 아이콘+텍스트를 조합으로 고를 수 있게 해달라"고 요청 — v0.42의 `Guide Icon 1/2` 방식은 아이콘만 바뀌고 텍스트 색은 안 따라가는 한계가 있어(`Icon`은 스왑되지만 텍스트 `fills`는 컴포넌트 속성으로 바인딩 불가), 아이콘+텍스트를 하나로 묶은 신규 컴포넌트 `Guide Row`(`Icon` 페이지, `Status`=Success/Error, `Text` 속성 포함)를 새로 만듦(Figma 실행). `TwoLine`의 두 줄을 이 `Guide Row` 인스턴스로 교체하고, Text Input에 `Guide Row 1`/`Guide Row 2`(INSTANCE_SWAP) 속성을 새로 걸어 톤을 함께 스왑하도록 재구성 — 테스트 인스턴스로 아이콘과 텍스트 색이 항상 함께 바뀌고 마스터는 영향받지 않음을 확인. 문구 자체를 바꾸려면 중첩된 `Guide Row` 인스턴스를 직접 선택해 그 자체의 `Text` 속성을 편집해야 함(Figma가 인스턴스 하위 레이어에는 컴포넌트 속성 참조를 걸 수 없다는 제약 때문) |
+| v0.44 | 2026-09-06 | §1.1 Color — 사용자 요청으로 `Warning` Primitive 11단계 색상을 노랑-골드 계열에서 주황 계열로 전면 교체(Figma 실행, 변수 값만 교체·별칭 구조 불변). `Feedback/Warning`/`Feedback/Warning Background`/`Feedback/Warning Text` 3개 Semantic 토큰 hex 갱신(자동 카스케이드, `Message Box` 스크린샷으로 확인). Foundation 문서 페이지의 hex 텍스트 라벨 11개는 별도 갱신 필요(스와치와 달리 라벨은 변수 바인딩이 아님 — 기존에 반복된 패턴) |
+| v0.45 | 2026-09-06 | §1.1 Color — 사용자 요청으로 `Feedback/Error Text`의 alias 대상을 Error/600→Error/500으로, `Feedback/Warning Text`의 alias 대상을 Warning/600→Warning/700으로 변경(Figma 실행). 두 토큰 모두 `Message Box`(§2.7) 전용이라 다른 컴포넌트에 영향 없음 — `Message Box` Status=Error/Warning 스크린샷으로 확인 |
+| v0.46 | 2026-09-06 | §2에 17번째 컴포넌트 `Text Area` 신규 추가(Figma 실행 + 문서) — 상품 리뷰 작성처럼 긴 텍스트를 입력하는 화면에 대응하기 위해 사용자가 실제 사용 예시 화면(`6801:4770`)을 참고해 요청. `Text Input`과 별개 컴포넌트로 신설(테두리 없이 화면 폭 전체를 쓰는 멀티라인 구조가 근본적으로 달라 변형이 아닌 분리를 택함, 사용자 확인). `Content`(Empty/Filled) × `Status`(Default/Active/Disabled/Invalid) + `Show Counter`(Boolean) 6개 변형 구성 — 참고 화면엔 Empty+Default 하나만 있었으나 `Text Input`과 일관된 품질로 나머지 상태(Active 커서, Disabled 배경 워시, Invalid+`Guide Row` 안내문구, 카운터)를 함께 신규 제작. `Guide Row`(§2.16에서 만든 아이콘+텍스트 결합 컴포넌트)를 그대로 재사용 |
