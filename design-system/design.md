@@ -26,56 +26,64 @@
 
 **Primitive** — 8개 색상 패밀리(각 팔레트 단계별 값 보유) + 배송 배지 전용 `Rocket` 패밀리입니다. 개별 사용은 지양하고 아래 Semantic 토큰(또는 Rocket은 그 자체)을 통해서만 참조합니다.
 
+> **v0.54 리네임 안내**: `Primary`/`Secondary`/`Error`/`Warning`/`Success`는 원래 역할(role) 이름이 Primitive 레벨에 붙어있었습니다 — 예를 들어 `Error/400`(빨강)이 실제로는 "에러"와 무관한 가격 강조·긴급 텍스트에도 재사용되면서 이름과 실제 쓰임이 어긋났습니다. Primitive는 색상값(hue) 이름만 갖고, "역할"은 Semantic 레이어(`Feedback/Error`, `Text/Price` 등)에만 있어야 한다는 원칙에 따라 5개 패밀리를 색상값 이름으로 리네임했습니다(`Primary`→`Blue`, `Secondary`→`SkyBlue`, `Error`→`Red`, `Warning`→`Orange`, `Success`→`Green`). **이 문서의 v0.53 이전 changelog 항목은 리네임 전 이름을 그대로 씁니다** — 그 시점엔 정확한 이름이었으므로 역사적 기록을 수정하지 않았습니다.
+
 | 패밀리 | 용도 |
 |---|---|
 | Gray | 배경·구분선·보조 텍스트 |
-| Primary | 행동(CTA)·링크. **가격 강조에는 쓰이지 않습니다**(아래 사용 규칙 참고) |
-| Secondary | Primary 계열 보조 톤 |
+| Blue(구 `Primary`, v0.54 리네임) | 행동(CTA)·링크. **가격 강조에는 쓰이지 않습니다**(아래 사용 규칙 참고) |
+| SkyBlue(구 `Secondary`, v0.54 리네임) | Blue보다 채도 낮은 하늘색 보조 톤 |
 | Point | 강한 강조(주황빨강 계열) |
-| Error | 위험·할인·최종 판매가 강조 |
-| Warning | 경고 표기(현재 프로모션 용도 실사용 없음) |
-| Success | 정의는 존재하나 **실사용 0건**(아래 사용 규칙 참고) |
+| Red(구 `Error`, v0.54 리네임) | 위험·할인·최종 판매가 강조 |
+| Orange(구 `Warning`, v0.54 리네임) | 경고 표기(현재 프로모션 용도 실사용 없음) |
+| Green(구 `Success`, v0.54 리네임) | 정의는 존재하나 **실사용 0건**(아래 사용 규칙 참고) |
 | Static | 순수 흰색(`0`)/검정(`1000`) |
 | **Rocket** | 배송 배지 4종 전용 — `Rocket/Seller/Background`·`Text`, `Rocket/Fresh/Background`·`Text`, `Rocket/Global/Background`·`Text`, `Rocket/Tomorrow/Background`·`Text` 8개. Semantic 레이어로 승격하지 않았습니다(도메인 특화 개념이라 Primitive로 충분) |
 
-**Semantic** (23개, 전량 Primitive를 alias해서 사용 — 하드코딩 없음)
+**Semantic** (29개, 전량 Primitive를 alias해서 사용 — 하드코딩 없음)
 
 | 토큰 | 값 | 근거 Primitive |
 |---|---|---|
-| `Text/Primary` | `#020b18` | Primary/1000 |
+| `Text/Primary` | `#34373d` | Gray/900(v0.51 정정 — 이전엔 `Primary/1000`을 가리켰으나 실사용 0건인 상태로 방치돼 있었음. `Primary`는 v0.54에서 `Blue`로 리네임됨) |
 | `Text/Description` | `#7b818e` | Gray/600 |
 | `Text/On Color` | `#ffffff` | Static/0 |
-| `Text/Accent` | `#106def` | Primary/500 |
+| `Text/Accent` | `#106def` | Blue/500 |
 | `Background/Background` | `#f4f6f6` | Gray/50 |
 | `Background/Divider` | `#e3e5e8` | Gray/200 |
 | `Background/Overlay` | `#000000` | (직접 값) |
-| `State/Primary` | `#106def` | Primary/500 |
-| `State/Primary Pressed` | `#0d57bf` | Primary/600 |
-| `State/Secondary` | `#e7f0fd` | Primary/50 |
-| `State/Secondary Pressed` | `#cfe2fc` | Primary/100 |
+| `State/Primary` | `#106def` | Blue/500 |
+| `State/Primary Pressed` | `#0d57bf` | Blue/600 |
+| `State/Secondary` | `#e7f0fd` | Blue/50 |
+| `State/Secondary Pressed` | `#cfe2fc` | Blue/100 |
 | `State/Disabled` | `#cdd0d5` | Gray/300 |
-| `Feedback/Success` | `#1dc948` | Success/500 |
-| `Feedback/Error` | `#e23636` | Error/400 |
-| `Feedback/Warning` | `#ffb33d` | Warning/400 |
+| `Feedback/Success` | `#1dc948` | Green/500 |
+| `Feedback/Error` | `#e23636` | Red/400 |
+| `Feedback/Warning` | `#ffb33d` | Orange/400 |
 | `Feedback/Info` | `#969ca6` | Gray/500 |
-| `Feedback/Error Background` | `#fce9e9` | Error/50 |
-| `Feedback/Error Text` | `#c91d1d` | Error/500 |
-| `Feedback/Warning Background` | `#fff3e0` | Warning/50 |
-| `Feedback/Warning Text` | `#a35d00` | Warning/700 |
+| `Feedback/Error Background` | `#fce9e9` | Red/50 |
+| `Feedback/Error Text` | `#c91d1d` | Red/500 |
+| `Feedback/Warning Background` | `#fff3e0` | Orange/50 |
+| `Feedback/Warning Text` | `#a35d00` | Orange/700 |
 | `Emphasis/Primary` | `#f2460d` | Point/500 |
 | `Emphasis/Secondary` | `#34373d` | Gray/900 |
 | `Emphasis/Ambient` | `#7b818e` | Gray/600 |
+| `Rating/Star` | `#ff9c5c` | Rating/Star(v0.52 신규 — `Rating Display` 별 아이콘 전용 신규 Primitive. `Point`/`Orange` 어느 단계와도 정확히 일치하지 않아 새 단계를 만들었고, `Rocket`(도메인 특화라 Primitive에만 머문 선례)과 달리 사용자가 명시적으로 Semantic 승격을 선택함) |
+| `Text/Price` | `#e23636` | Red/400(v0.53 신규 — 조건부 가격 강조, Price Block 판매가·단위가) |
+| `Background/Price` | `#e23636` | Red/400(v0.53 신규 — 할인율 배지 배경) |
+| `Text/Urgent` | `#e23636` | Red/400(v0.53 신규 — Order Deadline·재고 경고. `Text/Price`와 값은 같지만 역할이 달라 독립 토큰으로 분리) |
+| `Text/Delivery` | `#169c16` | Green/600(v0.53 신규 — 배송 달성/도착 안내) |
+| `Background/Benefit` | `#d4ebf7` | SkyBlue/200(v0.53 신규 — 무료배송/무료반품 배지 배경) |
 
 **사용 규칙**
-- **가격 강조는 파랑이 아니라 Error/Gray 계열입니다.** `Price Block`의 최종가는 할인 적용 시 `Error/400`(빨강), 미적용 시 `Gray/900`(거의 검정)이며 파랑은 어디에도 쓰이지 않습니다. 실제 장바구니 화면에서도 "총 결제 예상 금액"이 빨강으로 렌더링됩니다.
-- Primary(파랑)는 **CTA 버튼 배경·링크 텍스트 등 "행동" 용도로만** 사용합니다. 가격 숫자 강조에는 쓰지 않습니다.
-- **`Success` semantic은 정의만 있고 실사용 0건입니다.** `Toast`의 `Status=Success` 상태 아이콘은 실제로 초록이 아니라 `Primary/400`(파랑)을 쓰고 있습니다.
-- Error(빨강)는 할인율·위험·긴급 신호 및 위 최종가 강조에 쓰입니다.
+- **가격 강조는 파랑이 아니라 Red/Gray 계열입니다.** `Price Block`의 최종가는 할인 적용 시 `Red/400`(빨강), 미적용 시 `Gray/900`(거의 검정)이며 파랑은 어디에도 쓰이지 않습니다. 실제 장바구니 화면에서도 "총 결제 예상 금액"이 빨강으로 렌더링됩니다.
+- Blue(파랑, 구 `Primary`)는 **CTA 버튼 배경·링크 텍스트 등 "행동" 용도로만** 사용합니다. 가격 숫자 강조에는 쓰지 않습니다.
+- **`Green`(구 `Success`) semantic은 정의만 있고 실사용 0건입니다.** `Toast`의 `Status=Success` 상태 아이콘은 실제로 초록이 아니라 `Blue/400`(파랑)을 쓰고 있습니다.
+- Red(빨강, 구 `Error`)는 할인율·위험·긴급 신호 및 위 최종가 강조에 쓰입니다.
 - 배경색 채움(fill)은 이 시스템에서 가장 강한 강조 수단입니다 — CTA 버튼과 할인율 배지 외에는 배경색을 채우지 않습니다.
 - 프로모션 전용 색상은 별도로 정의돼 있지 않습니다 — 필요해지면 그때 정의합니다.
 - **로켓 배송 배지 4색은 `Rocket` Primitive 패밀리로 관리됩니다**(위 Primitive 표 참고). `Rocket Badge` 컴포넌트 4 variant 전량이 여기에 바인딩돼 있습니다.
 - **Dialog/Bottom Sheet의 dim 오버레이는 `Background/Overlay`(`#000000`)를 50% 불투명도로 적용합니다.** 화면 전체를 덮는 스크림 레이어는 정적 컴포넌트 자체에 포함되지 않고 구현 시 추가되는 영역이라, 이 값은 Toast의 위치·노출시간 규칙과 같은 성격의 개발 구현 규칙입니다.
-- **`Feedback/Success`는 실사용에서 파랑(`Primary/400`)으로 렌더링되는 것이 공식 동작입니다.** `Toast`의 `Status=Success` 아이콘이 초록이 아니라 파랑을 쓰는 현재 상태를 그대로 규칙으로 확정합니다 — `Feedback/Success` 토큰 자체를 삭제하지는 않되, 신규 컴포넌트에서 "성공" 상태를 표시할 때도 파랑을 기준으로 합니다.
+- **`Feedback/Success`는 실사용에서 파랑(`Blue/400`)으로 렌더링되는 것이 공식 동작입니다.** `Toast`의 `Status=Success` 아이콘이 초록이 아니라 파랑을 쓰는 현재 상태를 그대로 규칙으로 확정합니다 — `Feedback/Success` 토큰 자체를 삭제하지는 않되, 신규 컴포넌트에서 "성공" 상태를 표시할 때도 파랑을 기준으로 합니다.
 - **`Feedback/Error Background`/`Error Text`, `Feedback/Warning Background`/`Warning Text`는 `Message Box`(§2.7) 전용 배경·텍스트 페어입니다.** 옅은 배경 위에 진한 텍스트를 얹는 카드형 안내 배너에 씁니다 — 기존 `Feedback/Error`/`Feedback/Warning`(아이콘 단색용)과는 용도가 다릅니다.
 
 ### 1.2 Typography
@@ -578,7 +586,7 @@ Figma: `4001:18707`
 
 | Property | Values | Default | 비고 |
 |---|---|---|---|
-| Status | Default / Success / Error | Default | `Success`는 실제로는 초록이 아니라 `Primary/400` 파랑으로 렌더링됨(용인된 사실) |
+| Status | Default / Success / Error | Default | `Success`는 실제로는 초록이 아니라 `Blue/400` 파랑으로 렌더링됨(용인된 사실) |
 | Button | Boolean | — | 우측 텍스트 링크 |
 | Line | 1 / 2 | — | — |
 | Icon | Boolean | — | — |
@@ -645,8 +653,10 @@ Figma: `6253:1706`
 
 **Content**
 - 상품명은 "브랜드명+제품명+옵션"을 쉼표로 이어 쓰는 패턴("도브 화이트피치 리밸런싱 바디워시, 1kg, 2개")
+- 상품명 텍스트 색상은 `Semantic Text/Primary`(=`Gray/900`)입니다(v0.51 정정). 이전엔 raw `Primitive Primary/900`에 직접 바인딩돼 있었고, 그 시점의 `Text/Primary` 토큰 자체도 엉뚱한 값(`Primary/1000`)을 가리키고 있었습니다 — 둘 다 이번에 바로잡았습니다(`Item Card / Grid`·`Recommendation`(4 variant)·`Cart`(2 variant) 전체 7개 마스터).
 - 가격은 천단위 콤마+"원", 할인율은 정수 %
 - 배송 배지는 Rocket Badge, 평점은 Rating Display 재사용
+- 상품명 텍스트는 (1) 실제 글자 수·줄 수와 무관하게 항상 2줄 분량 `FIXED` 높이(40px) 박스를 차지하고 (2) 그 박스 안에서 `textAlignVertical: TOP`으로 앵커링합니다(v0.49/v0.50, §4 원칙 11 참고). 1줄로 끝나는 상품명과 2줄로 줄바꿈되는 상품명이 나란히 놓여도 (1) 덕분에 카드 전체 높이·가격 등 하위 요소 위치가 항상 동일하고, (2) 덕분에 상품명 자체의 시작 줄 위치도 항상 동일합니다 — 둘 중 하나만 지키면 다른 쪽에서 들쑥날쑥함이 남습니다(박스가 `HUG`면 카드 높이가 텍스트 길이에 비례해 줄어들고, `TOP` 없이 `CENTER`면 박스 높이는 같아도 텍스트 시작선이 처집니다).
 
 **Item Card / Cart**
 
@@ -680,7 +690,7 @@ Figma: `6065:640`
 
 | Property | Values | Default | 비고 |
 |---|---|---|---|
-| Discount | Applied / None | — | `Applied`는 정가 취소선+할인율 배지+최종가 `Error/400`(빨강)+단위가입니다. `None`은 최종가만 `Gray/900`+단위가입니다. **파랑(Primary)은 어느 상태에서도 쓰이지 않습니다** |
+| Discount | Applied / None | — | `Applied`는 정가 취소선(`Gray/600`)+할인율 배지(배경 `Semantic Background/Price`, 텍스트 `Semantic Text/On Color`)+최종가·단위가(`Semantic Text/Price`, v0.53 — 이전엔 `Error/400` Primitive 직접 바인딩)입니다. `None`은 최종가·단위가 전부 `Semantic Text/Primary`(=`Gray/900`)입니다. **파랑(Blue)은 어느 상태에서도 쓰이지 않습니다** |
 | Show Unit Price | Boolean | true | — |
 
 **Content**
@@ -695,12 +705,13 @@ Figma: `6041:519`
 
 **사용 가이드**
 - ✅ Do: 상품 카드/상세에서 배송 조건·적립 혜택을 안내할 때 사용합니다.
+- ✅ Do: `CouponApplied`(쿠폰 할인 적용됨)는 **`Item Card / Cart`에서만** 사용합니다. 장바구니에 담긴 후에야 쿠폰이 실제로 적용되는 흐름이라, `Recommendation`/`Grid`(아직 담기지 않은 상품)에는 쓰지 않습니다.
 
 **Variants**
 
 | Property | Values | Default | 비고 |
 |---|---|---|---|
-| Type | Free / Tomorrow / Fresh / Seller / Shipping / Return | — | — |
+| Type | Free / Tomorrow / Fresh / Seller / Shipping / Return / **LowStock**(v0.51) / **CouponApplied**(v0.51) | — | — |
 | Show ETA | Boolean | — | Show Reward와 독립적으로 조합 가능 |
 | Show Reward | Boolean | — | — |
 | ETA Text / Reward Text | TEXT | — | — |
@@ -708,6 +719,9 @@ Figma: `6041:519`
 **Content**
 - ETA "내일 도착"/"내일 새벽 도착"("~도착" 어미)
 - Reward "최대 770원 적립"("최대 N원 적립" 형식)
+- **LowStock**(v0.51): "재고 N개 남음" 형식, 아이콘 없이 순수 텍스트, `Semantic Text/Urgent`(=`Red/400`, v0.53), **폰트 크기 13px**(다른 Type의 12px보다 큼 — "긴급" 역할을 강조하기 위해 의도적으로 다른 크기를 부여, 사용자 확정)
+- **CouponApplied**(v0.51): "쿠폰 할인 적용됨" 형식, `Order Deadline`의 `Type=Default`(`6067:619`)와 동일 스펙(아이콘 16×16, `itemSpacing=2`, 텍스트 12px) — 단 아이콘은 `Icon / Placeholder Square`(`6202:776`)를 임시로 사용 중(실제 쿠폰 아이콘은 후속 과제), 텍스트 색 `Semantic Text/Price`(=`Red/400`, v0.53 — "긴급"이 아니라 "조건부 가격" 역할이라 `Text/Urgent`가 아닌 `Text/Price`를 씁니다)
+- Order Deadline(§2.8) 텍스트와 Spec Row의 배송 도착 텍스트("내일 도착" 등)도 v0.53에서 각각 `Text/Urgent`, `Text/Delivery` Semantic으로 재바인딩했습니다.
 
 **Rating Display**
 
@@ -728,6 +742,7 @@ Figma: `6047:463`
 **Content**
 - 평점은 소수 둘째 자리("4.83")
 - 리뷰 수 9,999건 초과는 "(9,999+)" 상한 표기, 이하는 실수 그대로("(28,915)" 사례 관찰 — 정확한 임계값 규칙 ⚠️ 확인 필요)
+- 별 아이콘 색상은 `Semantic Color/Rating/Star`에 바인딩돼 있습니다(v0.52). 이전엔 raw hex(`#ff9c5c`)로 어떤 토큰과도 연결되지 않은 상태였는데, 기존 `Point`/`Warning` 어느 단계와도 정확히 일치하지 않아 전용 Primitive+Semantic 쌍을 새로 만들어 바인딩했습니다.
 
 **Order Deadline**
 
@@ -816,11 +831,13 @@ Figma: `6527:38619`
 
 | Property | Values | Default | 비고 |
 |---|---|---|---|
-| Type | Promotion(특가진행중·빨강 outline) / Return(무료반품·회색 배경) / Shipping(무료배송·파란 배경) / RepeatPurchase(N회 구매·회색 배경) | — | — |
+| Type | Promotion(특가진행중·빨강 outline) / Return(무료반품·`SkyBlue/200` 배경) / Shipping(무료배송·`SkyBlue/200` 배경) / RepeatPurchase(N회 구매·회색 배경) | — | — |
 
 **Content**
 - 4~6자 단문
 - "무료OO"(무료반품/무료배송)와 "N회 구매"(카운트+명사) 두 패턴 — 새 Type 추가 시 이 중 하나를 따르는 것을 권장(강제 규칙 아님)
+- `Shipping`/`Return`(무료배송/무료반품) 텍스트 색상은 `Gray/900`, 배경은 둘 다 `SkyBlue/200`으로 통일했습니다(v0.51). 이전엔 텍스트가 `Primary/900`이었고, `Return`만 배경이 `Gray/100`으로 `Shipping`(이미 `Secondary/200`)과 달라 두 "혜택 조건" 라벨의 시각적 무게가 어긋나 있었습니다. v0.53에서 텍스트는 기존 `Semantic Text/Primary`를 재사용하도록, 배경은 신규 `Semantic Background/Benefit`에 바인딩하도록 정리해 더 이상 Primitive를 직접 참조하지 않습니다.
+- **이번 범위에 포함하지 않은 발견**: `Promotion`(특가진행중)은 마스터가 이미 `Red/400` 텍스트인데 실제 장바구니 인스턴스는 `Gray/900`으로 렌더링되고 있고, `RepeatPurchase`(N회 구매)도 텍스트가 여전히 `Blue/900`입니다 — 둘 다 사용자가 "이번엔 손대지 않음"으로 명시해 그대로 뒀습니다. 후속 과제로 남습니다.
 
 ### 2.10 List
 
@@ -1263,7 +1280,7 @@ Figma: `6998:6`
 8. **아이콘은 역할에 따라 outline(컨트롤)과 filled(정보성 배지)로 나뉜다.**
 9. **모달형 오버레이의 높이는 뷰포트 상대 단위로 제한하고, 스크롤 인디케이터는 콘텐츠 형태에 따라 선택적으로 붙인다.** 높이 상한은 고정 px가 아니라 `vh`로 계산한다(Dialog `70vh`, Bottom Sheet `80vh` — 둘 다 독립적으로 이 규칙에 수렴했다). 구분선+스크롤바로 구성된 스크롤 인디케이터(`Show Scroll` Boolean)는 길이를 예측할 수 없는 자유 텍스트 콘텐츠(Dialog, `Bottom Sheet / Informational`)에만 붙이고, 리스트·캐러셀처럼 형태 자체가 이미 스크롤 가능함을 암시하는 콘텐츠(`Bottom Sheet / Interactive`, `Item Card / Recommendation` 등의 캐러셀)에는 붙이지 않는다.
 10. **탭형 선택 UI는 역할에 따라 컴포넌트가 분리된다.** `Tab Group`은 같은 데이터를 다른 관점으로 재구성해 보여줄 때(실사용 예: 장바구니의 일반구매/자주산상품/찜한상품 — 사용자 개인의 구매·관심 이력 전환), `Category Tab`/`Chip`은 서로 다른 카테고리·옵션 자체를 나열해 고를 때 쓴다. 겉보기엔 둘 다 "여러 개 중 하나를 고르는 가로 UI"라 헷갈리기 쉽지만, "같은 데이터를 다른 렌즈로 보는가" 대 "서로 다른 대상을 고르는가"로 구분된다.
-11. **자유 텍스트가 들어가는 슬롯은 넘침 처리를 반드시 정한다.** 한 줄로 보여줄 슬롯(제목·라벨·메뉴명 등)이 자유 텍스트(사용자 입력·카탈로그 데이터)라면 기본값은 말줄임(`textTruncation: ENDING`, 실사용례: `List`의 `history` 타입, `Option Chips / Thumbnail`)이다. 여러 줄을 허용할 슬롯(설명·본문)은 자동 줄바꿈을 기본으로 하고, 가능하면 최대 줄 수까지 정해 그 이상은 라인클램프한다. 디자인 시스템이 직접 통제하는 고정 짧은 문구(Label/Badge류)는 대상이 아니다.
+11. **자유 텍스트가 들어가는 슬롯은 넘침 처리를 반드시 정한다.** 한 줄로 보여줄 슬롯(제목·라벨·메뉴명 등)이 자유 텍스트(사용자 입력·카탈로그 데이터)라면 기본값은 말줄임(`textTruncation: ENDING`, 실사용례: `List`의 `history` 타입, `Option Chips / Thumbnail`)이다. 여러 줄을 허용할 슬롯(설명·본문)은 자동 줄바꿈을 기본으로 하고, 가능하면 최대 줄 수까지 정해 그 이상은 라인클램프한다. 디자인 시스템이 직접 통제하는 고정 짧은 문구(Label/Badge류)는 대상이 아니다. **여러 인스턴스가 나란히 놓이는 카드형 컴포넌트에서, 줄바꿈 가능한 텍스트가 들어가는 슬롯은 실제 글자 수와 무관하게 항상 같은 면적을 차지해야 한다 — 두 조건이 함께 충족돼야 한다.** (1) 텍스트 박스의 세로 크기는 실제 줄 수에 맞춰 늘었다 줄었다 하는 `HUG`가 아니라, 예상 최대 줄 수(예: 2줄) 기준의 `FIXED` 높이로 고정한다 — `HUG`로 두면 텍스트가 짧을수록 박스 자체가 작아지고, 그 아래 딸린 가격·배송 정보 전체가 위로 당겨 올라와 옆 카드와 시작 높이가 달라진다. (2) 그 고정 박스 안에서 텍스트의 `textAlignVertical`은 `CENTER`가 아니라 `TOP`으로 앵커링한다 — `CENTER`로 두면 박스 높이는 같아도 짧은 텍스트가 박스 중앙에 떠서 시작 줄 자체가 아래로 처진다. 실사용례: `Item Card / Recommendation` 상품명(§2.8) — 처음엔 (2)만 고쳤다가(v0.49), 사용자가 (1)이 깨진 예시(텍스트 길이만큼 박스가 줄어드는 detached 카드)를 직접 만들어 보여줘 규칙에 (1)을 명시적으로 추가함(v0.50). 실제 컴포넌트 마스터는 처음부터 (1)을 지키고 있었음이 33개 인스턴스 전수조사로 확인됨 — 이번 v0.50은 문서 보강이며 Figma 변경은 없음.
 
 ---
 
@@ -1276,6 +1293,8 @@ Figma: `6998:6`
 - **통계(Stat/KPI) 카드** — "큰 숫자+작은 라벨" 조합에 대한 타이포그래피·배치 규칙 없음. 위와 같은 검증에서 발견.
 - **비인터랙티브 상태/태그 표시 컴포넌트** — `Label`(콘텐츠가 커머스 전용 Type)과 `Chip`(인터랙티브 전제) 둘 다 "정보 표시 전용 태그"에 맞지 않음. 영화 상세·활동 대시보드 검증 양쪽에서 반복 발견된 구조적 공백.
 - **Dialog Error/Warning 헤더 아이콘이 고아 컴포넌트 참조 중**: Dialog의 `Status=Error`/`Warning` variant 헤더 아이콘 인스턴스가 정식 `Icon / Status / Error`·`Icon / Status / Warning`(둘 다 실사용 0곳인 별개 아이콘)이 아니라, 이름조차 없는 고아 컴포넌트("x-01", `17:1119`, 부모 없음)를 참조하고 있다. `Item Card / Cart`의 개별 삭제 아이콘도 같은 고아 컴포넌트를 참조 중임을 장바구니 검증에서 추가로 확인(`design-system/validation/cart-screen.md`). 정식 `Icon / Status` 계열로 재연결이 필요하나 이번 작업 범위 밖이라 지금 고치지 않는다.
+- **`Spec Row` `CouponApplied`가 임시 아이콘을 쓰고 있음**: `Icon / Placeholder Square`(`6202:776`)를 자리표시자로 배치했다(v0.51). 실제 쿠폰 아이콘 에셋으로 교체 필요.
+- **`Label`의 `Promotion`(특가진행중)·`RepeatPurchase`(N회 구매) 색상 드리프트**: `Promotion`은 마스터가 `Red/400` 텍스트인데 실제 장바구니 인스턴스는 `Gray/900`으로 보이고, `RepeatPurchase`는 텍스트가 여전히 `Blue/900`이다(v0.51 매핑표 조사 중 발견, 사용자가 이번 범위에서 제외해 미수정).
 
 **Foundation**
 - Elevation 예외(Toast/Bottom Navigation) 공식 원칙화 여부
@@ -1294,6 +1313,7 @@ Figma: `6998:6`
 - 모든 화면은 `Status Bar`(44px 고정)로 시작합니다.
 - 화면 최하단에는 `Action Bar`(구매 CTA류, 상세페이지·장바구니) 또는 `Bottom Navigation`(탭 루트 화면, Category)이 스크롤 본문과 분리된 고정 요소로 붙습니다.
 - 이미지는 항상 풀블리드(화면 폭 100%, 마진 없음)이고, 텍스트·컨트롤 콘텐츠는 16px 마진을 씁니다(§1.3 Spacing 원칙과 일치).
+- **콘텐츠 블록 사이의 순수 여백(`spacing`, divider가 아닌 빈 간격)은 `Color/Primitive/Static/0`(흰색)을 씁니다.** `Background/Background`(Gray/50)를 쓰면 옅은 회색이라 바로 옆 8px divider(`Gray/100`)와 명도차가 작아 여백과 구분선이 시각적으로 섞여 보입니다 — 여백은 항상 흰색, 구분선만 회색이어야 두 요소가 명확히 구분됩니다.
 
 **패턴 1 — 목록형 화면**(상품목록_그리드 타입, 상품목록_리스트 타입)
 `App Bar` 2개 + `App Bar Small`(필터) 헤더 뭉치 → `divider`(1px) → 본문. 그리드는 2열(`Item Card / Grid`), 리스트는 1열(`Item Card / List`) — 헤더 구조는 완전히 동일하고 본문 컴포넌트만 바뀝니다. 행/아이템 사이는 전부 1px divider.
@@ -1301,6 +1321,10 @@ Figma: `6998:6`
 **패턴 2 — 스크롤형 화면**(상품 상세페이지, 장바구니)
 헤더 바로 뒤에 divider 없이 첫 콘텐츠 블록이 바로 시작합니다(목록형과 다른 점). `spacing → 콘텐츠 블록 → spacing → divider(8px) → spacing → 다음 블록` 리듬이 반복됩니다 — **1px divider는 같은 섹션 안의 아이템 구분, 8px divider는 서로 다른 섹션(상품정보/결제정보/추천상품/리뷰) 구분**으로 두께 자체가 위계를 나타냅니다. 가로 캐러셀(추천상품)은 항상 `Section Header` 바로 아래 간격 없이 붙습니다.
 - **divider 폭**: 헤더→콘텐츠 경계처럼 화면을 가로지르는 구분선은 360px 풀블리드, 같은 섹션 안에서 아이템끼리 구분하는 1px divider는 328px(화면폭−마진 32)로 좌우 16px 인셋을 유지합니다. 아이템 사이는 `아이템 → 16px → divider → 16px → 아이템` 리듬입니다 — divider를 아이템에 바로 붙이지 않습니다.
+- **divider 색상은 두께에 따라 다른 Primitive를 직접 참조합니다(실제 화면 `★ 장바구니` 실측 확인)** — 어느 쪽도 `Color/Semantic/Background/Divider` 토큰을 거치지 않고 Primitive를 직접 바인딩합니다.
+  - **1px divider**(아이템 구분·헤더 경계·컴포넌트 내부 구분선 전부 포함) → `Color/Primitive/Gray/200`
+  - **8px divider**(섹션 간 구분) → `Color/Primitive/Gray/100`
+  - `Background/Divider` Semantic 토큰(→`Gray/200`)은 Dialog·Bottom Sheet의 스크롤 UI 구분선처럼 **컴포넌트 내부**에서만 쓰이고, 화면 레벨의 raw divider는 Semantic을 거치지 않는 것이 실제 관찰된 패턴입니다 — 두 사용처의 바인딩 경로가 다르다는 것 자체가 예외가 아니라 설계입니다.
 
 **패턴 3 — 사이드바+콘텐츠 화면**(Category)
 상단 `Section Header + Quick Badge Row` → divider → 좌측 `Category Tab` 세로 목록 + 우측 콘텐츠 그리드 좌우 분할.
@@ -1357,3 +1381,11 @@ Figma: `6998:6`
 | v0.44 | 2026-09-06 | §1.1 Color — 사용자 요청으로 `Warning` Primitive 11단계 색상을 노랑-골드 계열에서 주황 계열로 전면 교체(Figma 실행, 변수 값만 교체·별칭 구조 불변). `Feedback/Warning`/`Feedback/Warning Background`/`Feedback/Warning Text` 3개 Semantic 토큰 hex 갱신(자동 카스케이드, `Message Box` 스크린샷으로 확인). Foundation 문서 페이지의 hex 텍스트 라벨 11개는 별도 갱신 필요(스와치와 달리 라벨은 변수 바인딩이 아님 — 기존에 반복된 패턴) |
 | v0.45 | 2026-09-06 | §1.1 Color — 사용자 요청으로 `Feedback/Error Text`의 alias 대상을 Error/600→Error/500으로, `Feedback/Warning Text`의 alias 대상을 Warning/600→Warning/700으로 변경(Figma 실행). 두 토큰 모두 `Message Box`(§2.7) 전용이라 다른 컴포넌트에 영향 없음 — `Message Box` Status=Error/Warning 스크린샷으로 확인 |
 | v0.46 | 2026-09-06 | §2에 17번째 컴포넌트 `Text Area` 신규 추가(Figma 실행 + 문서) — 상품 리뷰 작성처럼 긴 텍스트를 입력하는 화면에 대응하기 위해 사용자가 실제 사용 예시 화면(`6801:4770`)을 참고해 요청. `Text Input`과 별개 컴포넌트로 신설(테두리 없이 화면 폭 전체를 쓰는 멀티라인 구조가 근본적으로 달라 변형이 아닌 분리를 택함, 사용자 확인). `Content`(Empty/Filled) × `Status`(Default/Active/Disabled/Invalid) + `Show Counter`(Boolean) 6개 변형 구성 — 참고 화면엔 Empty+Default 하나만 있었으나 `Text Input`과 일관된 품질로 나머지 상태(Active 커서, Disabled 배경 워시, Invalid+`Guide Row` 안내문구, 카운터)를 함께 신규 제작. `Guide Row`(§2.16에서 만든 아이콘+텍스트 결합 컴포넌트)를 그대로 재사용 |
+| v0.47 | 2026-09-08 | §6 패턴 2에 divider 색상 규칙 추가 — 사용자가 "divider 색이 gray 100이어야 한다"고 요청했을 때 `Background/Divider` Semantic 토큰 자체를 Gray/100으로 바꿨었는데, 실제 화면(`★ 장바구니`, `6764:3802`)의 divider 14곳을 전수 재조회한 결과 **1px divider는 전부 `Gray/200`, 8px divider만 `Gray/100`**이었고 둘 다 Semantic을 거치지 않고 Primitive를 직접 참조하고 있었음을 확인 — 사용자가 "내가 말한 적 없는 규칙이 적용된 것 같다"고 재검토를 요청해 발견. `Background/Divider`는 Gray/200으로 되돌리고(Dialog/Bottom Sheet 내부 스크롤 구분선 등 다른 곳에서 정상적으로 이 값을 쓰고 있어 원복이 맞음), 실제 만들어둔 8px divider 6곳(장바구니 2곳, 상품 상세 4곳)만 `Gray/100` Primitive에 직접 재바인딩(Figma 실행) |
+| v0.48 | 2026-09-08 | §6 공통 규칙에 "콘텐츠 블록 사이 순수 여백(`spacing`)은 `Static/0`(흰색), divider만 회색"이라는 규칙 추가 — 상품 상세 페이지 제작 중 `spacing` 프레임이 `Background/Background`(Gray/50)에 바인딩돼 있어 옆 8px divider(`Gray/100`)와 명도차가 작아 구분이 흐려지는 것을 사용자가 지적, 상품 상세 페이지의 `spacing` 12곳 전수 재바인딩(Figma 실행) |
+| v0.49 | 2026-09-08 | `Item Card / Recommendation`(§2.8) 컴포넌트 버그 발견·수정(Figma 실행) — 사용자가 상품 상세 구버전 화면(`7100:5950`, node `7100:6017`)에서 상품명이 1줄/2줄로 갈릴 때 텍스트 위치가 들쑥날쑥해 보인다고 지적. 실측 결과 Price Block 등 하위 요소의 절대 위치는 이미 고정 40px 박스로 모든 카드에서 동일했고, 문제는 상품명 텍스트 자신이 `textAlignVertical: CENTER`라 1줄 상품명이 박스 중앙에 떠서 시작선이 처지는 것이었음. 4개 마스터(`Type`×`Discount` 전체 조합, `6051:644`/`6264:1396`/`6253:1678`/`6264:1411`) 전부 `TOP`으로 일괄 수정 — 컴포넌트 마스터 레벨 수정이라 캐러셀이 쓰이는 모든 화면(장바구니 2종, 상품 상세 2종)에 자동 반영됨. `Item Card / Cart`는 상품명 박스가 애초에 1줄 고정(높이 22px)이라 같은 문제가 구조적으로 발생하지 않아 미수정. §4 원칙 11에 "고정 줄 수 예약 박스는 `textAlignVertical: TOP`" 일반 규칙으로 편입 |
+| v0.50 | 2026-09-08 | v0.49 규칙 보강(문서만, Figma 변경 없음) — 사용자가 상품명 텍스트 박스를 `HUG`(실제 텍스트 길이만큼만 면적 확보)로 두면 텍스트가 짧을수록 박스·카드 전체가 작아져 옆 카드와 높이가 어긋난다는 걸 직접 만든 대조 예시(`7100:14177`, detached 카드 3장 나열 — 1·3번은 정상 `FIXED`, 2번만 `HUG`+수동 축약 텍스트)로 보여줌. v0.49는 "박스 안 텍스트 정렬(TOP)"만 다뤘는데, 실제로는 "박스 자체의 높이가 내용과 무관하게 `FIXED`여야 한다"는 별도 조건이 선행돼야 함을 명확히 하기 위해 §4 원칙 11·§2.8을 두 조건(①`FIXED` 높이 ②`TOP` 정렬)으로 재작성. 실사용 33개 인스턴스 전수조사 결과 실제 컴포넌트 마스터는 처음부터 ①을 지키고 있었음을 확인(사용자의 예시는 마스터에서 분리된 detached 프레임이라 실제 버그가 아니라 반례 시연용) — 그래서 이번엔 Figma 실행 없이 문서 명확화만 진행 |
+| v0.51 | 2026-09-09 | 사용자가 실제 커머스 카드 관찰로 "색은 역할별로 그룹 적용된다"는 규칙을 제시, `Item Card` 계열 색상을 실사용 260개 인스턴스 기준으로 전수 재조회한 결과를 바탕으로 3가지 확정 반영(Figma 실행): (1) 상품명을 raw `Primitive Primary/900` 직접 바인딩에서 **`Semantic Text/Primary`** 바인딩으로 전환(7개 마스터: `Item Card / Grid`, `/Recommendation` 4 variant, `/Cart` 2 variant) — 동시에 `Text/Primary` 토큰 자체가 그동안 엉뚱한 값(`Primary/1000`, 실사용 0건)을 가리키고 있던 것을 `Gray/900`으로 정정(§1.1) (2) `Label`의 `Shipping`(무료배송)·`Return`(무료반품) 텍스트를 `Gray/900`으로, 배경을 `Secondary/200`으로 통일(이전엔 `Return`만 배경이 `Gray/100`으로 달랐음, §2.9) (3) `Spec Row`에 `LowStock`(재고 N개 남음, 13px, 아이콘 없음)·`CouponApplied`(쿠폰 할인 적용됨, `Order Deadline Type=Default`와 동일 스펙, 아이콘은 `Icon / Placeholder Square` 임시 배치, `Item Card / Cart` 전용) 2개 variant 신규 추가(§2.8). 조사 과정에서 `Label`의 `Promotion`·`RepeatPurchase` 색상 드리프트를 추가 발견했으나 사용자가 이번 범위에서 제외해 §5 백로그로만 기록 |
+| v0.52 | 2026-09-09 | v0.51 후속 — 사용자가 "색상도 바인딩시켜야 할 것 같은데"라고 지적해 Item Card 관련 텍스트·아이콘 색상 바인딩을 전수 재확인(Figma 실행): (1) `Spec Row`의 `CouponApplied` 텍스트가 v0.51에서 의도(`Error/400`)와 다르게 `Text/Primary`에 잘못 바인딩된 실행 실수를 발견해 정정 (2) `Rating Display` 별 아이콘이 여전히 raw hex(`#ff9c5c`)로 어떤 토큰과도 정확히 일치하지 않는 채 방치돼 있던 것을, 사용자가 "Semantic에 별도 등록"을 선택해 신규 `Color/Primitive/Rating/Star` + `Color/Semantic/Rating/Star`(24번째 Semantic) 쌍을 만들어 바인딩(§1.1, §2.8) — 색상값 자체는 그대로 옮겼으므로 시각적 변화는 없고 바인딩 여부만 정정됨 |
+| v0.53 | 2026-09-09 | 사용자가 "직접 참조 없이 시맨틱을 참조하는 게 이상적이지?"라고 질문, "Primitive 이름 자체가 의미를 못 담을 때만 Semantic을 씌운다"는 기존 판단 기준(Divider·Rocket Badge 예외와 대비)에 따라 Item Card의 가격/긴급/배송/혜택 4개 역할은 Semantic화가 맞다고 답변 후 사용자가 승인, 2가지 확인(혜택 텍스트는 기존 `Text/Primary` 재사용, 배지 배경색도 범위 포함) 후 실행(Figma): 신규 Semantic 5개 생성 — `Text/Price`·`Background/Price`·`Text/Urgent`·`Text/Delivery`·`Background/Benefit`(전부 `Error/400`·`Success/600`·`Secondary/200` Primitive를 alias, 23→29개). `Text/Price`와 `Text/Urgent`는 오늘은 값이 같지만(`Error/400`) 역할이 달라 독립 토큰으로 분리. Price Block(판매가·단위가·할인 배지 배경/텍스트)·Order Deadline·Spec Row(`LowStock`/`CouponApplied`/배송 도착 텍스트 4곳)·Label(`Shipping`/`Return` 배경) 총 14개 노드를 이 신규 Semantic 및 기존 `Text/Primary`·`Text/On Color`로 재바인딩, Primitive 직접 참조를 전부 제거. 색상값은 그대로라 스크린샷상 시각적 변화 없음 |
+| v0.54 | 2026-09-10 | v0.53 작업 중 `Text/Price`·`Text/Urgent`가 둘 다 이름 없는 `Error/400`을 alias하는 걸 보고, 사용자가 "Primitive 컬러 네이밍이 괜찮은지, 특히 Error가 어색하다"는 의견을 요청 — Primitive에 역할(role) 이름이 붙어있어 이름과 실제 쓰임이 어긋난다는 게 핵심 문제라고 답하고 "리네임"과 "현행 유지+원칙 명문화" 두 방향을 제시, 리네임을 권장하되 비용도 함께 안내했다. 사용자가 리네임을 확정("시맨틱 컬러면 몰라도 프라이머리 컬러 네임에 error가 들어가는 게 어색해"). 실행(Figma): 5개 Primitive 패밀리 55개 변수 리네임 — `Primary`→`Blue`, `Secondary`→`SkyBlue`, `Error`→`Red`, `Warning`→`Orange`, `Success`→`Green`(hex 값은 그대로, 이름만 변경 — Figma는 ID 기반 참조라 기존 Semantic alias·컴포넌트 바인딩 29개 전부 안 끊어짐, 재조회로 확인). Foundation "Color · Primitive" 문서 페이지의 섹션 라벨 5곳도 동일하게 갱신. `Point`(빨강·주황 사이 버밀리언)는 이번 범위에서 제외 — Primary/Secondary/Error/Warning/Success만큼 명백한 역할 이름이 아니어서 사용자가 지적한 대상에 안 들어감. §1.1 Primitive 표·Semantic 표의 "근거 Primitive" 컬럼·§2 전역의 현재 상태 서술을 전부 새 이름으로 갱신했고, "이전엔 ~였다"는 과거 서술과 v0.53 이전 changelog는 그 시점 실제 이름 그대로 남겼다(역사적 기록 보존) |
