@@ -1,2 +1,6 @@
 .DS_Store
-.claude/settings.local.json
+.claude/
+03-ui-benchmark-analysis-v0.1.md
+design-references/
+design-system/decisions.md
+diagnosis/
